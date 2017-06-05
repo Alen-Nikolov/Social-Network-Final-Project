@@ -46,7 +46,7 @@ function requireLogin(req, res, next) {
     } else {
         next();
     }
-};
+}
 
 app.use(function(req, res, next) {
     req.db = db;

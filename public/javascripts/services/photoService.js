@@ -1,6 +1,6 @@
 app.factory('photoService', function($http, $rootScope) {
     function Photos() {
-        var photos;
+       this.photos=null;
     }
     Photos.prototype.downloadUserPhotos = function(userId) {
         return this.photos = $http.get('/photos/' + userId);

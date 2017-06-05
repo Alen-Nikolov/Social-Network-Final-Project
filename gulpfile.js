@@ -8,3 +8,7 @@ gulp.task('sass', function(){
         .pipe(sass()) // Converts Sass to CSS with gulp-sass
         .pipe(gulp.dest('./public/stylesheets'));
 });
+gulp.task('watch', function(){
+    gulp.watch('./public/stylesheets/scss/**/*.scss', ['sass']);
+    // Other watchers
+});
