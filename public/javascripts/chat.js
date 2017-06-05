@@ -35,8 +35,8 @@ $(function() {
                         picture: senderProfilePicture,
                         text: text,
                         senderId: userId,
-                        receiverId: friendId,
-                    }
+                        receiverId: friendId
+                    };
                     socket.emit('send message', message);
                 }
                 $("#btn-input-chat").val("");

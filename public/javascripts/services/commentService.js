@@ -1,6 +1,6 @@
 app.factory('commentService', function($http, $rootScope) {
     function Comments() {
-        this.comments;
+        var comments;
     }
     Comments.prototype.downloadComments = function(postId) {
         return this.comments = $http.get('/comments/' + postId);

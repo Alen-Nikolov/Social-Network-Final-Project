@@ -29,11 +29,11 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
                     function() {
                         $(btn).hide()
                     });
-            };
+            }
             addBtnOnHover('.profile-photo', '.addProfImg');
             addBtnOnHover('.cover-photo', '.addCoverImg');
             //show input add new post
-            $('.addPost').show()
+            $('.addPost').show();
 
             // ===================== ADD PHOTO BUTTON - MODAL WINDOW ==============
             $scope.uploadPhoto = function() {
@@ -81,7 +81,7 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
             $('.searchFriends').hide();
         }
         $('body').on('click', function(evt) {
-            if (evt.target.id == "searchFriendsInput" || evt.target.className == "searchFriends") {
+            if (evt.target.id === "searchFriendsInput" || evt.target.className === "searchFriends") {
                 return;
             }
             $('.searchFriends').hide();
@@ -93,7 +93,6 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
 
     // ===================== PHOTO ATTACHED ======================
     $('.input-files').on('change', function() {
-        console.log($('.input-files'))
         if ($('.input-files').val()) {
             $('.file-attached').show();
         } else {

@@ -2,7 +2,7 @@ app.directive('chatUsers', ['$rootScope', "userService", function($rootScope, us
     return {
         restrict: 'E',
         scope: {
-            data: '=',
+            data: '='
         },
         templateUrl: './javascripts/directives/chatUsers.htm',
         link: function(scope, $element) {

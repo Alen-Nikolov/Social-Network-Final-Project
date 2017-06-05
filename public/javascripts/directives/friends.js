@@ -4,6 +4,6 @@ app.directive('friends', ["userService", function(userService) {
         scope: {
             data: '='
         },
-        templateUrl: './javascripts/directives/friends.htm',
+        templateUrl: './javascripts/directives/friends.htm'
     };
 }]);

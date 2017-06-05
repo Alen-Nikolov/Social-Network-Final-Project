@@ -19,7 +19,7 @@ var uploading = multer({
             return cb(null, false)
         }
         cb(null, true)
-    },
+    }
 });
 
 // router.get('/allfriendsrequests', function(req, res) {
@@ -59,7 +59,7 @@ router.post('/:photoId', function(req, res) {
     var photoId = req.params.photoId;
 
     photos.find({ _id: photoId, likes: { $in: [req.session.user._id] } }).then(function(data) {
-        if (data.length == 0) {
+        if (data.length === 0) {
             photos.update({ _id: photoId }, { $addToSet: { likes: req.session.user._id } });
         } else {
             photos.update({ _id: photoId }, { $pull: { likes: req.session.user._id } });

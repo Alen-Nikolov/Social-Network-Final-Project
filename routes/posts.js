@@ -18,7 +18,7 @@ var uploading = multer({
             return cb(null, false)
         }
         cb(null, true)
-    },
+    }
 });
 
 //================== LOAD ALL POSTS ==================
@@ -39,7 +39,7 @@ router.post('/', uploading.any(), function(req, res) {
     var date = new Date();
     var picture;
 
-    if (req.files[0] == undefined) {
+    if (req.files[0] === undefined) {
         picture = "";
     } else {
         picture = req.files[0].path;
@@ -56,7 +56,7 @@ router.post('/', uploading.any(), function(req, res) {
         location: "",
         comments: [],
         likes: []
-    }
+    };
 
     posts.insert(newPost);
     res.redirect("/");
@@ -69,7 +69,7 @@ router.post('/:postId', function(req, res) {
     var postId = req.params.postId;
 
     posts.find({ _id: postId, likes: { $in: [req.session.user._id] } }).then(function(data) {
-        if (data.length == 0) {
+        if (data.length === 0) {
             posts.update({ _id: postId }, { $addToSet: { likes: req.session.user._id } });
 
         } else {

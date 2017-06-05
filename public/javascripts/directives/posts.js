@@ -2,7 +2,7 @@ app.directive('posts', ['$rootScope', 'postService', 'commentService', function(
     return {
         restrict: 'E',
         scope: {
-            data: '=',
+            data: '='
         },
         templateUrl: './javascripts/directives/posts.htm',
         link: function(scope, $element) {
@@ -10,7 +10,7 @@ app.directive('posts', ['$rootScope', 'postService', 'commentService', function(
             var userId = $rootScope.user._id;
 
             scope.showHideComments = function() {
-                scope.IsVisible = scope.IsVisible ? false : true;
+                scope.IsVisible = !scope.IsVisible;
             };
 
             scope.hidePost = function() {

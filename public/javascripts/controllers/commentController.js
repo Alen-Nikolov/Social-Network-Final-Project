@@ -20,7 +20,7 @@ app.controller('commentController', ['$scope', '$rootScope', 'commentService', '
             };
             if (comment.text !== "") {
                 commentService.addComment(comment).then(function (res) {
-                    if (res.status == 201) {
+                    if (res.status === 201) {
                         $scope.comments.push(res.data);
                         $('.panel-comments textarea').val("");
                         $scope.$parent.numOfComments();

@@ -17,8 +17,8 @@ var uploading = multer({
         if (file.mimetype !== 'image/jpg' && file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
             return cb(null, false)
         }
-        cb(null, true)
-    },
+        cb(null, true);
+    }
 });
 
 // =================== GET CURRENT USER ====================
@@ -42,7 +42,6 @@ router.get('/allfriendsrequests', function (req, res) {
     users.find({ _id: userID }).then(function (usersReceive) {
         userReceiveFriendRequests = usersReceive[0].receiveFriendRequests;
         users.find({ _id: { $in: usersReceive[0].receiveFriendRequests } }, ["_id", "fname", "lname", "fullName", "profileImageUrl", "coverPhotoUrl", "friends"]).then(function (usersFriendRequests) {
-
             res.json(usersFriendRequests);
         });
 
@@ -69,7 +68,7 @@ router.get('/chat/:friendId', function (req, res) {
     messages.find({
         $or: [
             { $and: [{ receiverId: userId }, { senderId: friendId }] },
-            { $and: [{ receiverId: friendId }, { senderId: userId }] },
+            { $and: [{ receiverId: friendId }, { senderId: userId }] }
         ]
     }, { sort: { date: 1 } }).then(function (messages) {
         res.json(messages);
@@ -105,7 +104,7 @@ router.post('/friendRequest/:userId', function (req, res) {
     var users = db.get('users');
     var userId = req.params.userId;
     users.find({ _id: req.session.user._id, sendFriendRequests: { $in: [userId] } }).then(function (data) {
-        if (data.length == 0) {
+        if (data.length === 0) {
             users.update({ _id: req.session.user._id }, { $addToSet: { sendFriendRequests: userId } });
             users.update({ _id: userId }, { $addToSet: { receiveFriendRequests: req.session.user._id } });
         }
@@ -122,7 +121,7 @@ router.post('/newpost', uploading.any(), function (req, res) {
     var date = new Date();
     var picture;
 
-    if (req.files[0] == undefined) {
+    if (req.files[0] === undefined) {
         picture = "";
     } else {
         picture = req.files[0].path;
@@ -151,7 +150,7 @@ router.post('/uploadphoto', uploading.any(), function (req, res) {
     var date = new Date();
 
 
-    if (req.files[0] == undefined) {
+    if (req.files[0] === undefined) {
         res.send("");
     } else {
         var picture = {

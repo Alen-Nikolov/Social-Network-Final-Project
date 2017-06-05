@@ -6,5 +6,5 @@ var sass = require('gulp-sass');
 gulp.task('sass', function(){
     return gulp.src('./public/stylesheets/scss/styles.scss')
         .pipe(sass()) // Converts Sass to CSS with gulp-sass
-        .pipe(gulp.dest('./public/stylesheets'))
+        .pipe(gulp.dest('./public/stylesheets'));
 });

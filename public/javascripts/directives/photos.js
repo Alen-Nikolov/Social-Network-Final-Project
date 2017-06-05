@@ -11,7 +11,7 @@ app.directive('photos', ["$rootScope", "photoService", "commentService", functio
 
             scope.IsVisible = false;
             scope.showHideComments = function() {
-                scope.IsVisible = scope.IsVisible ? false : true;
+                scope.IsVisible = !scope.IsVisible;
                 if (scope.IsVisible) {
                     $('body').css('overflow', 'hidden');
                     $(".overlay").show();
