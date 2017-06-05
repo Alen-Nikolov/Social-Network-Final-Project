@@ -5,7 +5,7 @@ app.factory('userService', function($http, $rootScope) {
         this.users;
         this.friendRequests;
         this.friends;
-    };
+    }
     User.prototype.getCurrentUser = function() {
         return this.user;
     };

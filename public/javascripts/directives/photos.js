@@ -22,7 +22,7 @@ app.directive('photos', ["$rootScope", "photoService", "commentService", functio
             };
 
             scope.isLiked = function() {
-                if (scope.data.likes.indexOf(userId) == -1) {
+                if (scope.data.likes.indexOf(userId) === -1) {
                     $($element.find('.like-btn')).removeClass('change-color');
                 } else {
                     $($element.find('.like-btn')).addClass('change-color');
@@ -32,7 +32,7 @@ app.directive('photos', ["$rootScope", "photoService", "commentService", functio
 
             scope.changeLike = function($event) {
                 photoService.changeLike(photoId).then(function(res) {
-                    if (res.data[0].likes.indexOf(userId) == -1) {
+                    if (res.data[0].likes.indexOf(userId) === -1) {
                         scope.data.likes.push(userId);
                         scope.isLiked();
                     } else {
@@ -45,8 +45,8 @@ app.directive('photos', ["$rootScope", "photoService", "commentService", functio
                 commentService.downloadComments(photoId).then(function(res) {
                     scope.comments = res.data;
                 });
-            }
-            scope.numOfComments()
+            };
+            scope.numOfComments();
             $('.input-flex textarea').css('overflow', 'hidden').autogrow();
         }
     };

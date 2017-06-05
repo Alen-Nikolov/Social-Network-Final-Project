@@ -1,23 +1,5 @@
 $(function() {
     $('#side-menu').metisMenu();
-
-
-    // function addImageBtnPost() {
-    //     $('#create-post .btnPicture').on('click', function () {
-    //         $('#create-post input[type=file]').click();
-    //     });
-    // }
-
-    // function addImageBtnPhoto() {
-    //     $('#add-photo .btnPicture').on('click', function () {
-    //         $('#add-photo input[type=file]').click();
-    //     });
-    // }
-    // $(window).on('hashchange', function (e) {
-    //     setTimeout(addImageBtnPhoto, 500);
-    //     setTimeout(addImageBtnPost, 500);
-    // });
-
 });
 
 //Loads the correct sidebar on window load,

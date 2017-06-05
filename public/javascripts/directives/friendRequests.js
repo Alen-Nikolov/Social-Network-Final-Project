@@ -2,7 +2,7 @@ app.directive('friendRequests', ["userService", function(userService) {
     return {
         restrict: 'E',
         scope: {
-            data: '=',
+            data: '='
         },
         templateUrl: './javascripts/directives/friendRequests.htm',
         link: function(scope, $element) {
