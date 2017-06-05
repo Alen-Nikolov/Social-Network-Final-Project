@@ -35,7 +35,7 @@ router.post('/', urlencodedParser, function (req, res, next) {
                 if (err) return next(err);
                 user.password = hash;
                 users.find({ email: user.email }).then(function (data) {
-                    if (data.length == 0) {
+                    if (data.length === 0) {
                         users.insert(user);
                         res.redirect('/login');
                     } else {
