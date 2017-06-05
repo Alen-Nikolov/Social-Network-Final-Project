@@ -55,6 +55,7 @@ app.use(function(req, res, next) {
 });
 app.use('/login', login);
 app.use('/register', register);
+app.use('/styles',express.static(path.join(__dirname, 'public/stylesheets')));
 app.use('/', requireLogin, express.static(path.join(__dirname, 'public')));
 app.use('/user', user);
 
