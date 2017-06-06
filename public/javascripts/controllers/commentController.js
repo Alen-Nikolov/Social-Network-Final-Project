@@ -14,13 +14,13 @@ app.controller('commentController', ['$scope', '$rootScope', 'commentService', '
                 user_id: userId,
                 fname: user.fname,
                 lname: user.lname,
-                userProfImg: user.profileImageUrl || "../images/profile.jpg",
+                userProfImg: user.PROFILE_IMG_URL || "../images/profile.jpg",
                 likes: [],
                 date: new Date().toLocaleString()
             };
             if (comment.text !== "") {
                 commentService.addComment(comment).then(function (res) {
-                    if (res.status == 201) {
+                    if (res.status === 201) {
                         $scope.comments.push(res.data);
                         $('.panel-comments textarea').val("");
                         $scope.$parent.numOfComments();

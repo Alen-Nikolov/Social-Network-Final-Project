@@ -19,7 +19,7 @@ app.controller('chatUsersController', ['$scope', '$rootScope', 'userService', fu
             $('.searchFriendsChat').hide();
         }
         $('body').on('click', function(evt) {
-            if (evt.target.id == "searchFriendsInputChat" || evt.target.className == "searchFriendsChat") {
+            if (evt.target.id === "searchFriendsInputChat" || evt.target.className === "searchFriendsChat") {
                 return;
             }
             $('.searchFriendsChat').hide();

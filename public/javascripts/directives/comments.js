@@ -2,7 +2,7 @@ app.directive('comments', ["$rootScope", "commentService", function($rootScope, 
     return {
         restrict: 'E',
         scope: {
-            data: '=',
+            data: '='
         },
         templateUrl: './javascripts/directives/comments.htm',
         link: function(scope, $element) {
@@ -14,7 +14,7 @@ app.directive('comments', ["$rootScope", "commentService", function($rootScope, 
 
             if (comments.length !== 0) {
                 scope.isLikedComment = function() {
-                    if (scope.data.likes.indexOf(userId) == -1) {
+                    if (scope.data.likes.indexOf(userId) === -1) {
                         $($element.find('.like-btn-comments')).removeClass('change-color');
                     } else {
                         $($element.find('.like-btn-comments')).addClass('change-color');
@@ -25,7 +25,7 @@ app.directive('comments', ["$rootScope", "commentService", function($rootScope, 
                 scope.changeLikeComment = function($event) {
                     commentService.changeLikeComment(comId).then(function(res) {
 
-                        if (res.data[0].likes.indexOf(userId) == -1) {
+                        if (res.data[0].likes.indexOf(userId) === -1) {
                             scope.data.likes.push(userId);
                             scope.isLikedComment();
                         } else {
@@ -34,7 +34,7 @@ app.directive('comments', ["$rootScope", "commentService", function($rootScope, 
                         }
                     });
                 }
-            };
+            }
         }
 
 

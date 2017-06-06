@@ -1,10 +1,10 @@
-$(function() {
+$(function () {
     function chat() {
         var socket = io.connect();
 
         var btnSend = $('.btn-chat');
-        var escapeHTML = function(unsafe) {
-            return unsafe.replace(/[&<"']/g, function(m) {
+        var escapeHTML = function (unsafe) {
+            return unsafe.replace(/[&<"']/g, function (m) {
                 switch (m) {
                     case '&':
                         return '&amp;';
@@ -18,15 +18,15 @@ $(function() {
             });
         };
 
-        $.get("/user", function(data) {
+        $.get("/user", function (data) {
             var senderFullName = data[0].fullName;
             var senderProfilePicture = data[0].profileImageUrl;
             var userId = data[0]._id;
 
-            btnSend.on('click', function(event) {
+            btnSend.on('click', function (event) {
                 event.preventDefault();
                 var text = $("#btn-input-chat").val();
-                var text = escapeHTML(text);
+                text = escapeHTML(text);
                 var friendId = btnSend.attr('data-friendId');
                 var friendName = btnSend.attr('data-friendName');
                 if (friendId && text) {
@@ -35,17 +35,17 @@ $(function() {
                         picture: senderProfilePicture,
                         text: text,
                         senderId: userId,
-                        receiverId: friendId,
-                    }
+                        receiverId: friendId
+                    };
                     socket.emit('send message', message);
                 }
                 $("#btn-input-chat").val("");
             });
             var chat;
-            socket.on("new message", function(data) {
+            socket.on("new message", function (data) {
                 var receiver = data.msg.receiverId;
                 var sender = data.msg.senderId;
-                if (receiver == userId) {
+                if (receiver === userId) {
                     chat = $("ul.chat").append("<div class='listWithMessages'><li class='left clearfix'><strong>" +
                         data.msg.name + "</strong>: " + data.msg.text + "</li></div>");
                     $("#chatDivScroll").scrollTop($("#chatDivScroll")[0].scrollHeight);
@@ -58,5 +58,6 @@ $(function() {
             });
         });
     }
+
     chat();
 });

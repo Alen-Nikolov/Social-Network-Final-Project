@@ -10,8 +10,8 @@ app.directive('users', ['$rootScope', "userService", function($rootScope, userSe
             // ============== SHOW/HIDE BTN SEND FRIEND REQUEST ==============
             scope.hasSendRequest = function() {
 
-                if ($rootScope.user.sendFriendRequests.indexOf(userId) == -1) {
-                    if ($rootScope.user.friends.indexOf(userId) == -1) {
+                if ($rootScope.user.sendFriendRequests.indexOf(userId) === -1) {
+                    if ($rootScope.user.friends.indexOf(userId) === -1) {
                         $($element.find('.sendMsg')).hide();
                         $($element.find('.friend-request')).show();
                     } else {

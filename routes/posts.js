@@ -18,7 +18,7 @@ var uploading = multer({
             return cb(null, false)
         }
         cb(null, true)
-    },
+    }
 });
 
 //================== LOAD ALL POSTS ==================
@@ -36,10 +36,10 @@ router.get('/', function(req, res) {
 router.post('/', uploading.any(), function(req, res) {
     var db = req.db;
     var posts = db.get('posts');
-    var date = new Date();
+    var date = Date.now();
     var picture;
 
-    if (req.files[0] == undefined) {
+    if (req.files[0] === undefined) {
         picture = "";
     } else {
         picture = req.files[0].path;
@@ -50,13 +50,13 @@ router.post('/', uploading.any(), function(req, res) {
         text: req.body.text,
         picture: picture,
         postedBy: req.session.user.fname + " " + req.session.user.lname,
-        userProfImg: req.session.user.profileImageUrl,
-        date: date.toLocaleString(),
+        userProfImg: req.session.user.PROFILE_IMG_URL,
+        date: date,
         taggedFriends: [],
         location: "",
         comments: [],
         likes: []
-    }
+    };
 
     posts.insert(newPost);
     res.redirect("/");
@@ -69,7 +69,7 @@ router.post('/:postId', function(req, res) {
     var postId = req.params.postId;
 
     posts.find({ _id: postId, likes: { $in: [req.session.user._id] } }).then(function(data) {
-        if (data.length == 0) {
+        if (data.length === 0) {
             posts.update({ _id: postId }, { $addToSet: { likes: req.session.user._id } });
 
         } else {

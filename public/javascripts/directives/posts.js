@@ -2,7 +2,7 @@ app.directive('posts', ['$rootScope', 'postService', 'commentService', function(
     return {
         restrict: 'E',
         scope: {
-            data: '=',
+            data: '='
         },
         templateUrl: './javascripts/directives/posts.htm',
         link: function(scope, $element) {
@@ -10,7 +10,7 @@ app.directive('posts', ['$rootScope', 'postService', 'commentService', function(
             var userId = $rootScope.user._id;
 
             scope.showHideComments = function() {
-                scope.IsVisible = scope.IsVisible ? false : true;
+                scope.IsVisible = !scope.IsVisible;
             };
 
             scope.hidePost = function() {
@@ -18,7 +18,7 @@ app.directive('posts', ['$rootScope', 'postService', 'commentService', function(
             };
 
             scope.isLiked = function() {
-                if (scope.data.likes.indexOf(userId) == -1) {
+                if (scope.data.likes.indexOf(userId) === -1) {
                     $($element.find('.like-btn')).removeClass('change-color');
                 } else {
                     $($element.find('.like-btn')).addClass('change-color');
@@ -28,7 +28,7 @@ app.directive('posts', ['$rootScope', 'postService', 'commentService', function(
 
             scope.changeLike = function($event) {
                 postService.changeLike(postId).then(function(res) {
-                    if (res.data[0].likes.indexOf(userId) == -1) {
+                    if (res.data[0].likes.indexOf(userId) === -1) {
                         scope.data.likes.push(userId);
                         scope.isLiked();
                     } else {
@@ -41,8 +41,8 @@ app.directive('posts', ['$rootScope', 'postService', 'commentService', function(
                 commentService.downloadComments(postId).then(function(res) {
                     scope.comments = res.data;
                 })
-            }
-            scope.numOfComments()
+            };
+            scope.numOfComments();
             $('.input-flex textarea').css('overflow', 'hidden').autogrow();
         }
     };
