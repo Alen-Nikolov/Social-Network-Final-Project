@@ -1,10 +1,10 @@
 app.factory('userService', function($http, $rootScope) {
     function User() {
         this.user = $http.get('/user');
-        this.posts;
-        this.users;
-        this.friendRequests;
-        this.friends;
+        this.posts=null;
+        this.users=null;
+        this.friendRequests=null;
+        this.friends=null;
     }
     User.prototype.getCurrentUser = function() {
         return this.user;
