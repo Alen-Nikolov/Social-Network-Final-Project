@@ -1,11 +1,12 @@
-app.factory('photoService', function($http, $rootScope) {
+app.factory('photoService', function ($http, $rootScope) {
     function Photos() {
-       this.photos=null;
+        this.photos = null;
     }
-    Photos.prototype.downloadUserPhotos = function(userId) {
+
+    Photos.prototype.downloadUserPhotos = function (userId) {
         return this.photos = $http.get('/photos/' + userId);
     };
-    Photos.prototype.changeLike = function(photoId) {
+    Photos.prototype.changeLike = function (photoId) {
         return $http.post('/photos/' + photoId);
     };
 
