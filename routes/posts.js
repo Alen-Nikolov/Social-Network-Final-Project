@@ -37,7 +37,6 @@ router.post('/', uploading.any(), function(req, res) {
     var db = req.db;
     var posts = db.get('posts');
     var date = Date.now();
-    console.log(date);
     var picture;
 
     if (req.files[0] === undefined) {
