@@ -36,7 +36,8 @@ router.get('/', function(req, res) {
 router.post('/', uploading.any(), function(req, res) {
     var db = req.db;
     var posts = db.get('posts');
-    var date = new Date();
+    var date = Date.now();
+    console.log(date);
     var picture;
 
     if (req.files[0] === undefined) {
@@ -51,7 +52,7 @@ router.post('/', uploading.any(), function(req, res) {
         picture: picture,
         postedBy: req.session.user.fname + " " + req.session.user.lname,
         userProfImg: req.session.user.PROFILE_IMG_URL,
-        date: date.toLocaleString(),
+        date: date,
         taggedFriends: [],
         location: "",
         comments: [],

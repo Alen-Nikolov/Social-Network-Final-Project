@@ -17,7 +17,6 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
     // ============= GET CURRENT USER/SHOW FRIENDS PROFILES =======================
     userService.getCurrentUser().then(function(res) {
         $rootScope.user = res.data[0];
-        console.log($rootScope.user);
         $scope.isCurrentUser = true;
         if (userId === $rootScope.user._id || userId === "") {
             $scope.isCurrentUser = true;
