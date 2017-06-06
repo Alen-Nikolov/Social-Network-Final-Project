@@ -50,7 +50,7 @@ router.post('/', uploading.any(), function(req, res) {
         text: req.body.text,
         picture: picture,
         postedBy: req.session.user.fname + " " + req.session.user.lname,
-        userProfImg: req.session.user.profileImageUrl,
+        userProfImg: req.session.user.PROFILE_IMG_URL,
         date: date.toLocaleString(),
         taggedFriends: [],
         location: "",

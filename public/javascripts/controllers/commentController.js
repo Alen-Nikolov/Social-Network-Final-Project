@@ -14,7 +14,7 @@ app.controller('commentController', ['$scope', '$rootScope', 'commentService', '
                 user_id: userId,
                 fname: user.fname,
                 lname: user.lname,
-                userProfImg: user.profileImageUrl || "../images/profile.jpg",
+                userProfImg: user.PROFILE_IMG_URL || "../images/profile.jpg",
                 likes: [],
                 date: new Date().toLocaleString()
             };
