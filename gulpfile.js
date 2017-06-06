@@ -10,5 +10,6 @@ gulp.task('sass', function(){
 });
 gulp.task('watch', function(){
     gulp.watch('./public/stylesheets/scss/**/*.scss', ['sass']);
+
     // Other watchers
 });
