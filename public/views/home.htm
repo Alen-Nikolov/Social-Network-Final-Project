@@ -1,4 +1,4 @@
-<div id="page-wrapper">
+<div id="page-wrapper" ng-controller="postController">
     <div class="row">
         <div class="col-lg-8">
             <!--================== ADD NEW POST=============================-->
@@ -9,22 +9,23 @@
                     </div>
                     <div class="panel-body">
                         <div class="create-post">
-                            <form action="/posts" method="POST" enctype="multipart/form-data">
-                                <div class="input-flex">
-                                    <a href="#/profile/{{$root.user_id}}">
-                                        <img class="img-comments" ng-src="{{$root.user.PROFILE_IMG_URL}}" err-src="../images/profile.jpg" alt="">
-                                    </a>
-                                    <textarea class="post-text" rows="3" cols="90" placeholder="Say something?" required maxlength="700" name="text"></textarea>
-                                </div>
-                                <div id="inputForFiles">
-                                    <input class="input-files" type="file" name="picture">
-                                </div>
-                                <button type="button" class="btn btn-default btn btnPicture" ng-click="addImageBtnPost()"><i class="fa fa-picture-o" aria-hidden="true"></i> Photo/Video</button>
-                                <span class="file-attached">File attached</span>
-                                <!--<button type="button" class="btn btn-default btn"><i class="fa fa-map-marker"  aria-hidden="true"></i> Location</button>
-                                <button type="button" class="btn btn-default btn">Tag Friends</button>-->
-                                <input type="submit" class="btn btn-default btn pull-right" id="btnCreatePost" value="Post">
-                            </form>
+                            <div class="input-flex">
+                                <a href="#/profile/{{$root.user_id}}">
+                                    <img class="img-comments" ng-src="{{$root.user.PROFILE_IMG_URL}}"
+                                         err-src="../images/profile.jpg" alt="">
+                                </a>
+                                <textarea class="post-text" ng-model="postText" rows="3" cols="90"
+                                          placeholder="Say something?" required maxlength="700" name="text"></textarea>
+                            </div>
+                            <div id="inputForFiles">
+                                <input class="input-files" type="file" file-model="postPicture"/>
+                            </div>
+                            <button type="button" class="btn btn-default btn btnPicture" ng-click="addImageBtnPost()"><i
+                                    class="fa fa-picture-o" aria-hidden="true"></i> Photo/Video
+                            </button>
+                            <span class="file-attached">File attached</span>
+
+                            <button class="btn btn-default btn pull-right" ng-click="uploadFile()">Post</button>
                         </div>
                     </div>
                 </div>
@@ -32,7 +33,7 @@
             <!--====================== LOAD ALL POSTS =========================-->
             <div ng-controller="postController">
                 <div infinite-scroll='loadMore()'>
-                    <div ng-repeat="post in somePosts">
+                    <div ng-repeat="post in posts">
                         <posts data='post'></posts>
                     </div>
                 </div>

@@ -5,15 +5,19 @@
                 <div class="photos">
                     <form method="POST" action="/user/coverAvatar" enctype="multipart/form-data">
                         <div class="cover-photo">
-                            <a class="thumbnail fancybox cover-fancybox" ng-href="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}">
-                                <img ng-src="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}" err-src="../images/cover-photo.jpg" alt="cover photo">
+                            <a class="thumbnail fancybox cover-fancybox"
+                               ng-href="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}">
+                                <img ng-src="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}"
+                                     err-src="../images/cover-photo.jpg" alt="cover photo">
                             </a>
                             <input id="addCoverImg" type="file" name="cover" onchange="this.form.submit();">
                             <label for="addCoverImg" class="addCoverImg">add Cover photo</label>
                         </div>
                         <div class="profile-photo">
-                            <a class="thumbnail fancybox avatar-fancybox" ng-href="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}">
-                                <img ng-src="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}" err-src="../images/profile.jpg" alt="profile photo">
+                            <a class="thumbnail fancybox avatar-fancybox"
+                               ng-href="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}">
+                                <img ng-src="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}"
+                                     err-src="../images/profile.jpg" alt="profile photo">
                             </a>
                             <input id="addProfImg" type="file" name="avatar" onchange="this.form.submit();">
                             <label for="addProfImg" class="addProfImg">add Avatar</label>
@@ -34,7 +38,7 @@
         </div>
     </div>
     <!--======================================POSTS==============================================-->
-    <div class="row" ng-show="show==1 || show==udefined">
+    <div class="row" ng-show="show==1 || show==udefined"  ng-controller="postController">
         <div class="col-lg-8">
             <!--============================= NEW POST ========================================-->
             <section class="addPost">
@@ -44,29 +48,30 @@
                     </div>
                     <div class="panel-body">
                         <div class="create-post">
-                            <form action="/user/newpost" method="POST" enctype="multipart/form-data">
-                                <div class="input-flex">
-                                    <a href="#/profile/{{$root.user_id}}">
-                                        <img class="img-comments" ng-src="{{$root.user.PROFILE_IMG_URL}}" err-src="../images/profile.jpg" alt="">
-                                    </a>
-                                    <textarea class="post-text" rows="3" cols="90" placeholder="Say something?" required maxlength="700" name="text"></textarea>
-                                </div>
-                                <div id="inputForFiles">
-                                    <input class="input-files" type="file" name="picture">
-                                </div>
-                                <button type="button" class="btn btn-default btn btnPicture" ng-click="addImageBtnPost()"><i class="fa fa-picture-o" aria-hidden="true"></i> Photo/Video</button>
-                                <span class="file-attached">File attached</span>
-                                <!--<button type="button" class="btn btn-default btn"><i class="fa fa-map-marker" aria-hidden="true"></i> Location</button>
-                                <button type="button" class="btn btn-default btn">Tag Friends</button>-->
-                                <input type="submit" class="btn btn-default btn pull-right" value="Post">
-                            </form>
+                            <div class="input-flex">
+                                <a href="#/profile/{{$root.user_id}}">
+                                    <img class="img-comments" ng-src="{{$root.user.PROFILE_IMG_URL}}"
+                                         err-src="../images/profile.jpg" alt="">
+                                </a>
+                                <textarea class="post-text" ng-model="postText" rows="3" cols="90"
+                                          placeholder="Say something?" required maxlength="700" name="text"></textarea>
+                            </div>
+                            <div id="inputForFiles">
+                                <input class="input-files" type="file" file-model="postPicture"/>
+                            </div>
+                            <button type="button" class="btn btn-default btn btnPicture" ng-click="addImageBtnPost()"><i
+                                    class="fa fa-picture-o" aria-hidden="true"></i> Photo/Video
+                            </button>
+                            <span class="file-attached">File attached</span>
+
+                            <button class="btn btn-default btn pull-right" ng-click="uploadFile()">Post</button>
                         </div>
                     </div>
                 </div>
             </section>
             <!--======================= LOAD ALL USER POSTS ============================-->
             <div infinite-scroll='loadMore()'>
-                <div ng-repeat="post in somePosts">
+                <div ng-repeat="post in posts">
                     <posts data='post'></posts>
                 </div>
             </div>
@@ -80,17 +85,20 @@
             <div id="add-photo" class="panel panel-default photos-panel">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h4> <i class="fa fa-camera-retro" aria-hidden="true"></i> Photos</h4>
+                        <h4><i class="fa fa-camera-retro" aria-hidden="true"></i> Photos</h4>
                     </div>
                     <div class="pull-right">
-                        <button id="uploadPhotoBtn" type="button" class="btn btn-default btn comment-btn" ng-click="uploadPhoto()"><i class="fa fa-picture-o" aria-hidden="true" ></i> Add Photo</button>
+                        <button id="uploadPhotoBtn" type="button" class="btn btn-default btn comment-btn"
+                                ng-click="uploadPhoto()"><i class="fa fa-picture-o" aria-hidden="true"></i> Add Photo
+                        </button>
                     </div>
                 </div>
                 <div>
                     <div class="overlay"></div>
                     <center>
                         <div id="uploadPhoto">
-                            <div class="pull-right close-photo"><i class="fa fa-times fa-2x" aria-hidden="true"></i></div>
+                            <div class="pull-right close-photo"><i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                            </div>
                             <div class="content-upload">
                                 <form method="POST" action="/user/uploadphoto" enctype="multipart/form-data">
                                     <div class="upload-title">
@@ -99,12 +107,16 @@
                                     </div>
                                     <div class="upload-location">
                                         <label for="photoLocation">Location</label>
-                                        <input type="text" id="photoLocation" placeholder="Add Location" name="location" required>
+                                        <input type="text" id="photoLocation" placeholder="Add Location" name="location"
+                                               required>
                                     </div>
                                     <div class="upload-btns">
                                         <input id="choosePhoto" type="file" name="addPhoto" value="Add Photo" required>
-                                        <label for="choosePhoto" class="btn btn-default btn comment-btn">Choose File</label>
-                                        <button id="uploadPhotoGallery" class="btn btn-default btn comment-btn" ng-click="showPhotoGallery()">Upload Photo</button>
+                                        <label for="choosePhoto" class="btn btn-default btn comment-btn">Choose
+                                            File</label>
+                                        <button id="uploadPhotoGallery" class="btn btn-default btn comment-btn"
+                                                ng-click="showPhotoGallery()">Upload Photo
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -132,7 +144,7 @@
             <div class="panel panel-default photos-panel">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h4> <i class="fa fa-users" aria-hidden="true"></i> Friends</h4>
+                        <h4><i class="fa fa-users" aria-hidden="true"></i> Friends</h4>
                     </div>
                     <div class="pull-right">
                         <span>All Friends({{isCurrentUser ? user.friends.length : profile.friends.length}}) </span>

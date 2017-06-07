@@ -3,17 +3,17 @@ var router = express.Router();
 var multer = require('multer');
 
 var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
+    destination: function (req, file, cb) {
         cb(null, 'uploads/')
     },
-    filename: function(req, file, cb) {
+    filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + ".jpg");
     }
 });
 
 var uploading = multer({
     storage: storage,
-    fileFilter: function(req, file, cb) {
+    fileFilter: function (req, file, cb) {
         if (file.mimetype !== 'image/jpg' && file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
             return cb(null, false)
         }
@@ -22,27 +22,25 @@ var uploading = multer({
 });
 
 //================== LOAD ALL POSTS ==================
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
     var db = req.db;
     var posts = db.get('posts');
-    var arrayOfFriends=req.session.user.friends;
+    var arrayOfFriends = req.session.user.friends;
     arrayOfFriends.push(req.session.user._id);
-    posts.find({user_id:{ $in: arrayOfFriends}}, { sort: { date: -1 } }, function(err, posts) {
+    posts.find({user_id: {$in: arrayOfFriends}}, {sort: {date: -1}}, function (err, posts) {
         res.json(posts);
     });
 });
 
 //================== ADD NEW POST ==================
-router.post('/', uploading.any(), function(req, res) {
+router.post('/', uploading.single('file'), function (req, res) {
     var db = req.db;
     var posts = db.get('posts');
     var date = Date.now();
     var picture;
 
-    if (req.files[0] === undefined) {
-        picture = "";
-    } else {
-        picture = req.files[0].path;
+    if (req.file !== undefined) {
+        picture = req.file.path;
     }
 
     var newPost = {
@@ -59,25 +57,25 @@ router.post('/', uploading.any(), function(req, res) {
     };
 
     posts.insert(newPost);
-    res.redirect("/");
+    res.status(201).json(newPost);
 });
 
 //================== LIKE A POST ==================
-router.post('/:postId', function(req, res) {
+router.post('/:postId', function (req, res) {
     var db = req.db;
     var posts = db.get('posts');
     var postId = req.params.postId;
 
-    posts.find({ _id: postId, likes: { $in: [req.session.user._id] } }).then(function(data) {
+    posts.find({_id: postId, likes: {$in: [req.session.user._id]}}).then(function (data) {
         if (data.length === 0) {
-            posts.update({ _id: postId }, { $addToSet: { likes: req.session.user._id } });
+            posts.update({_id: postId}, {$addToSet: {likes: req.session.user._id}});
 
         } else {
-            posts.update({ _id: postId }, { $pull: { likes: req.session.user._id } });
+            posts.update({_id: postId}, {$pull: {likes: req.session.user._id}});
         }
     });
 
-    posts.find({ _id: postId }).then(function(data) {
+    posts.find({_id: postId}).then(function (data) {
         res.send(data);
     })
 

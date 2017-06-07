@@ -11,7 +11,7 @@ app.directive('friendRequests', ["userService", function(userService) {
             scope.confirmRequest = function($event) {
                 userService.confirmRequest(reqFriendId).then(function(data) {
                     $($event.currentTarget).hide();
-                    $($event.currentTarget.parentNode).append('<p>Friend request accepted</p>');
+                    $($event.currentTarget.parentNode).html('<p>Friend request accepted</p>');
                 });
             };
             //  =============== REJECT FRIEND REQUEST =========
