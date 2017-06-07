@@ -20,7 +20,9 @@ app.controller('postController', ['$scope', '$http', '$rootScope', 'postService'
         var postText = $scope.postText;
         var uploadUrl = "/posts/";
         var fd = new FormData();
-        if (postText != "" && postText != undefined) {
+
+        //check if text is empty or undefined
+        if (postText) {
             fd.append('text', postText);
             fd.append('file', file);
 
@@ -32,8 +34,6 @@ app.controller('postController', ['$scope', '$http', '$rootScope', 'postService'
                 $scope.posts.unshift(data);
                 $scope.postText = '';
                 $scope.postPicture = null;
-            }).error(function () {
-
             });
         }
     };
