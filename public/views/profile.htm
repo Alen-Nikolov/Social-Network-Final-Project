@@ -39,9 +39,9 @@
     </div>
     <!--======================================POSTS==============================================-->
     <div class="row" ng-show="show==1 || show==undefined">
-        <div class="col-lg-8">
+        <div class="col-lg-8" ng-controller="postController">
             <!--============================= NEW POST ========================================-->
-            <section class="addPost" ng-controller="postController">
+            <section class="addPost">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5>Status</h5>
@@ -56,10 +56,11 @@
                                 <textarea class="post-text" ng-model="postText" rows="3" cols="90"
                                           placeholder="Say something?" required maxlength="700" name="text"></textarea>
                             </div>
-                            <div id="inputForFiles">
-                                <input class="input-files" type="file" file-model="myFile"/>
-                            </div>
-                            <button type="button" class="btn btn-default btn btnPicture" ng-click="addImageBtnPost()"><i
+                        </div>
+                        <div id="inputForFiles">
+                            <input class="input-files" type="file" file-model="postPicture"/>
+                        </div>
+                        <button type="button" class="btn btn-default btn btnPicture" ng-click="addImageBtnPost()"><i
                                     class="fa fa-picture-o" aria-hidden="true"></i> Photo/Video
                             </button>
                             <span class="file-attached">File attached</span>
