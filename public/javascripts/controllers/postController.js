@@ -14,24 +14,13 @@ app.controller('postController', ['$scope', '$http', '$rootScope', 'postService'
     userService.getCurrentUser().then(function (res) {
         $scope.user = res.data;
     });
-    // ===================== PHOTO ATTACHED ======================
-    $('.input-files').on('change', function () {
-        if ($('.input-files').val()) {
-            $('.file-attached').show();
-        } else {
-            $('.file-attached').hide();
-        }
-    });
-    /**
-     * @param
-     */
-    $scope.uploadFile = function () {
 
+    $scope.uploadFile = function () {
         var file = $scope.postPicture;
         var postText = $scope.postText;
         var uploadUrl = "/posts/";
         var fd = new FormData();
-        if(postText!="" && postText!=undefined){
+        if (postText != "" && postText != undefined) {
             fd.append('text', postText);
             fd.append('file', file);
 
@@ -41,9 +30,8 @@ app.controller('postController', ['$scope', '$http', '$rootScope', 'postService'
             }).success(function (data) {
                 data.date = new Date(data.date).toLocaleDateString('en-GB');
                 $scope.posts.unshift(data);
-                $scope.postText='';
-                console.log($scope.postPicture);
-                $scope.postPicture=null;
+                $scope.postText = '';
+                $scope.postPicture = null;
             }).error(function () {
 
             });

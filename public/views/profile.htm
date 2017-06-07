@@ -57,12 +57,11 @@
                                           placeholder="Say something?" required maxlength="700" name="text"></textarea>
                             </div>
                             <div id="inputForFiles">
-                                <input class="input-files" type="file" file-model="postPicture"/>
+                                <input class="input-files" type="file" file-model="postPicture" ng-change="checkForFile($element)"/>
                             </div>
                             <button type="button" class="btn btn-default btn btnPicture" ng-click="addImageBtnPost()"><i
                                     class="fa fa-picture-o" aria-hidden="true"></i> Photo/Video
                             </button>
-                            <span class="file-attached">File attached</span>
 
                             <button class="btn btn-default btn pull-right" ng-click="uploadFile()">Post</button>
                         </div>
