@@ -2,6 +2,7 @@ app.controller('postController', ['$scope', '$http', '$rootScope', 'postService'
     // =========== LOAD ALL POSTS =============
     postService.downloadPosts().then(function (res) {
         $scope.posts = res.data;
+
         $scope.posts.forEach((post) => {
             return post.date = new Date(post.date).toLocaleDateString('en-GB');
         });

@@ -56,8 +56,9 @@ router.post('/', uploading.single('file'), function (req, res) {
         likes: []
     };
 
-    posts.insert(newPost);
-    res.status(201).json(newPost);
+    posts.insert(newPost).then(function (data) {
+        res.status(201).json(data);
+    });
 });
 
 //================== LIKE A POST ==================
