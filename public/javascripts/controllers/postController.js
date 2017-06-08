@@ -18,10 +18,10 @@ app.controller('postController', ['$scope', '$http', '$rootScope', 'postService'
         $scope.user = res.data;
     });
 
-    /***
-     * This function fires when the button for making new post is pressed.
-     * It creates a formData object and puts the file from the input in it, together with the text.
-     * Then it sends it to the server as a POST request.
+    /**
+     * A function that sends new posts to server
+     * @param {file} postPicture the image to send to server
+     * @param {string} postText the text of the post
      */
     $scope.uploadFile = function () {
         postPicture = $scope.postPicture;

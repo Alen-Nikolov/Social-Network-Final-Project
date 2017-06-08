@@ -19,7 +19,6 @@ app.directive('friendRequests', ["userService", function (userService) {
                     scope.requestVisible = 2;
                 });
             };
-
         }
     };
 }]);
