@@ -1,6 +1,8 @@
 app.controller('photosController', ['$scope', 'photoService', 'userService', function($scope, photoService, userService) {
     var url = window.location.href;
     var userId = url.substring(url.lastIndexOf('/') + 1);
+    $scope.showPhotoUploader = false;
+
     //================= LOAD ALL USER PHOTOS  ============
     photoService.downloadUserPhotos(userId).then(function(res) {
         $scope.photos = res.data;
@@ -19,6 +21,18 @@ app.controller('photosController', ['$scope', 'photoService', 'userService', fun
             }
         });
     });
+
+    $scope.uploadPhoto = function () {
+        console.log($scope);
+        // $(".overlay, #uploadPhoto").show();
+        //
+        // $(".close-photo").on('click', function () {
+        //     $(".overlay, #uploadPhoto").hide();
+        // });
+        $scope.showPhotoUploader=!$scope.showPhotoUploader;
+
+    };
+
     $scope.showPhotoGallery = function() {
         $scope.$parent.show = 2;
     }

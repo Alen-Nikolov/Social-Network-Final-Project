@@ -1,5 +1,7 @@
 app.controller('postController', ['$scope', '$http', '$rootScope', 'postService', 'userService', function ($scope, $http, $rootScope, postService, userService) {
     // =========== LOAD ALL POSTS =============
+    var postPicture = null;
+    var postText='';
     postService.downloadPosts().then(function (res) {
         $scope.posts = res.data;
 
@@ -21,17 +23,16 @@ app.controller('postController', ['$scope', '$http', '$rootScope', 'postService'
      * It creates a formData object and puts the file from the input in it, together with the text.
      * Then it sends it to the server as a POST request.
      */
-
     $scope.uploadFile = function () {
-        var file = $scope.postPicture;
-        var postText = $scope.postText;
+        postPicture = $scope.postPicture;
+        postText = $scope.postText;
         var uploadUrl = "/posts/";
         var fd = new FormData();
 
         //check if text is empty or undefined
         if (postText) {
             fd.append('text', postText);
-            fd.append('file', file);
+            fd.append('file', postPicture);
 
             $http.post(uploadUrl, fd, {
                 transformRequest: angular.identity,

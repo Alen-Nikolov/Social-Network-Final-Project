@@ -37,13 +37,7 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
             $('.addPost').show();
 
             // ===================== ADD PHOTO BUTTON - MODAL WINDOW ==============
-            $scope.uploadPhoto = function () {
-                $(".overlay, #uploadPhoto").show();
 
-                $(".close-photo").on('click', function () {
-                    $(".overlay, #uploadPhoto").hide();
-                });
-            };
 
             //show upload photo button
             $('#uploadPhotoBtn').show();

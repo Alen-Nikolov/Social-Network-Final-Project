@@ -38,7 +38,7 @@
         </div>
     </div>
     <!--======================================POSTS==============================================-->
-    <div class="row" ng-show="show==1 || show==undefined">
+    <div class="row" ng-show="show == 1 || show == undefined">
         <div class="col-lg-8" ng-controller="postController">
             <!--============================= NEW POST ========================================-->
             <section class="addPost">
@@ -57,7 +57,7 @@
                                           placeholder="Say something?" required maxlength="700" name="text"></textarea>
                             </div>
                             <div id="inputForFiles">
-                                <input class="input-files" type="file"  file-model="postPicture"/>
+                                <input class="input-files" type="file" file-model="postPicture"/>
                             </div>
                             <button type="button" class="btn btn-default btn btnPicture" ng-click="addImageBtnPost()"><i
                                     class="fa fa-picture-o" aria-hidden="true"></i> Photo/Video
@@ -79,25 +79,24 @@
     </div>
 
     <!--================================= PHOTOS =======================================-->
-    <div class="row" ng-show="show==2" ng-controller="photosController">
+    <div class="row" ng-show="show == 2">
         <div class="col-lg-12">
             <!--======================== ADD PHOTO =====================================-->
-            <div id="add-photo" class="panel panel-default photos-panel">
+            <div id="add-photo" class="panel panel-default photos-panel" ng-controller="photosController" >
                 <div class="panel-heading">
                     <div class="pull-left">
                         <h4><i class="fa fa-camera-retro" aria-hidden="true"></i> Photos</h4>
                     </div>
                     <div class="pull-right">
                         <button id="uploadPhotoBtn" type="button" class="btn btn-default btn comment-btn"
-                                ng-click="uploadPhoto()"><i class="fa fa-picture-o" aria-hidden="true"></i> Add Photo
+                                ng-click="showPhotoUploader = !showPhotoUploader"><i class="fa fa-picture-o" aria-hidden="true"></i> Add Photo
                         </button>
                     </div>
                 </div>
                 <div>
-                    <div class="overlay"></div>
-                    <center>
-                        <div id="uploadPhoto">
-                            <div class="pull-right close-photo"><i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                    <div class="overlay" ng-show="showPhotoUploader == true"></div>
+                        <div id="uploadPhoto" ng-show="showPhotoUploader == true">
+                            <div class="pull-right close-photo" ng-click="showPhotoUploader = !showPhotoUploader" ><i class="fa fa-times fa-2x" aria-hidden="true"></i>
                             </div>
                             <div class="content-upload">
                                 <form method="POST" action="/user/uploadphoto" enctype="multipart/form-data">
@@ -121,7 +120,6 @@
                                 </form>
                             </div>
                         </div>
-                    </center>
                 </div>
                 <!--===================== LOAD ALL PHOTOS ===============================-->
                 <div class="panel-body" style="padding-bottom: 15px;">
