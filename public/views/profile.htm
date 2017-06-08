@@ -4,23 +4,23 @@
             <div class="panel panel-default img-panel ">
                 <div class="photos">
                     <form method="POST" action="/user/coverAvatar" enctype="multipart/form-data">
-                        <div class="cover-photo">
+                        <div class="cover-photo" ng-mouseover="showBtnCover=true" ng-mouseleave="showBtnCover=false">
                             <a class="thumbnail fancybox cover-fancybox"
                                ng-href="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}">
                                 <img ng-src="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}"
                                      err-src="../images/cover-photo.jpg" alt="cover photo">
                             </a>
                             <input id="addCoverImg" type="file" name="cover" onchange="this.form.submit();">
-                            <label for="addCoverImg" class="addCoverImg">add Cover photo</label>
+                            <label for="addCoverImg" class="addCoverImg" ng-show="showBtnCover">add Cover photo</label>
                         </div>
-                        <div class="profile-photo">
+                        <div class="profile-photo" ng-mouseover="showBtnAvatar=true" ng-mouseleave="showBtnAvatar=false">
                             <a class="thumbnail fancybox avatar-fancybox"
                                ng-href="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}">
                                 <img ng-src="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}"
                                      err-src="../images/profile.jpg" alt="profile photo">
                             </a>
                             <input id="addProfImg" type="file" name="avatar" onchange="this.form.submit();">
-                            <label for="addProfImg" class="addProfImg">add Avatar</label>
+                            <label for="addProfImg" class="addProfImg" ng-show="showBtnAvatar">add Avatar</label>
                         </div>
                     </form>
                 </div>
@@ -41,7 +41,7 @@
     <div class="row" ng-show="show == 1 || show == undefined">
         <div class="col-lg-8" ng-controller="postController">
             <!--============================= NEW POST ========================================-->
-            <section class="addPost">
+            <section class="addPost" ng-show="showAddPost">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5>Status</h5>
