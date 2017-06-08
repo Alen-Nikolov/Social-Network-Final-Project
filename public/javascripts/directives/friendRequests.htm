@@ -4,8 +4,15 @@
         <span>{{data.fullName}}</span>
     </div>
     <div class="col-md-5">
-        <button class="confirm-btn" ng-click="confirmRequest($event)">Confirm</button>
-        <button class="reject-btn" ng-click="rejectRequest($event)">Reject</button>
+        <div ng-if="requestVisible == undefined">
+            <button class="confirm-btn" ng-if="requestVisible == undefined" ng-click="confirmRequest(); requestVisible = 1">
+                Confirm
+            </button>
+            <button class="reject-btn" ng-if="requestVisible == undefined" ng-click="rejectRequest(); requestVisible = 2">Reject
+            </button>
+        </div>
+        <p ng-if="requestVisible == 1">Friend request accepted</p>
+        <p ng-if="requestVisible == 2">Friend request rejected</p>
     </div>
 </li>
 <li class="divider"></li>

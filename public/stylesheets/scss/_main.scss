@@ -830,17 +830,17 @@ div.btns-username {
   height: 100%;
   background: #000;
   opacity: 0.6;
-  z-index: 2000;
+  z-index: 1050;
   filter: alpha(opacity=60);
 }
 
 #uploadPhoto {
   position: fixed;
-  top: 25%;
-  left: 30%;
+  top: 28%;
+  left: 37%;
   width: 500px;
   height: 300px;
-  z-index: 2001;
+  z-index: 1055;
   background-color: white;
   border-radius: 3px;
 }
