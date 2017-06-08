@@ -23,14 +23,7 @@ app.controller('photosController', ['$scope', 'photoService', 'userService', fun
     });
 
     $scope.uploadPhoto = function () {
-        console.log($scope);
-        // $(".overlay, #uploadPhoto").show();
-        //
-        // $(".close-photo").on('click', function () {
-        //     $(".overlay, #uploadPhoto").hide();
-        // });
         $scope.showPhotoUploader=!$scope.showPhotoUploader;
-
     };
 
     $scope.showPhotoGallery = function() {
