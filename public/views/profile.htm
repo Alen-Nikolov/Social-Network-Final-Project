@@ -4,31 +4,32 @@
             <div class="panel panel-default img-panel ">
                 <div class="photos">
                     <form method="POST" action="/user/coverAvatar" enctype="multipart/form-data">
-                        <div class="cover-photo" ng-mouseover="showBtnCover=true" ng-mouseleave="showBtnCover=false">
+                        <div class="cover-photo" ng-mouseover = "showBtnCover = true" ng-mouseleave = "showBtnCover = false">
                             <a class="thumbnail fancybox cover-fancybox"
                                ng-href="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}">
                                 <img ng-src="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}"
                                      err-src="../images/cover-photo.jpg" alt="cover photo">
                             </a>
                             <input id="addCoverImg" type="file" name="cover" onchange="this.form.submit();">
-                            <label for="addCoverImg" class="addCoverImg" ng-show="showBtnCover">add Cover photo</label>
+                            <label for="addCoverImg" class="addCoverImg" ng-show = "showBtnCover">add Cover photo</label>
                         </div>
-                        <div class="profile-photo" ng-mouseover="showBtnAvatar=true" ng-mouseleave="showBtnAvatar=false">
+                        <div class="profile-photo" ng-mouseover="showBtnAvatar=true"
+                             ng-mouseleave="showBtnAvatar=false">
                             <a class="thumbnail fancybox avatar-fancybox"
                                ng-href="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}">
                                 <img ng-src="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}"
                                      err-src="../images/profile.jpg" alt="profile photo">
                             </a>
                             <input id="addProfImg" type="file" name="avatar" onchange="this.form.submit();">
-                            <label for="addProfImg" class="addProfImg" ng-show="showBtnAvatar">add Avatar</label>
+                            <label for="addProfImg" class="addProfImg" ng-show = "showBtnAvatar">add Avatar</label>
                         </div>
                     </form>
                 </div>
                 <div class="panel-heading text-left btns-username">
                     <div class="btn-menu">
-                        <a href="" ng-click="show=1">Timeline</a>
-                        <a href="" ng-click="show=2">Photos</a>
-                        <a href="" ng-click="show=3">Friends</a>
+                        <a href="" ng-click="show = 1">Timeline</a>
+                        <a href="" ng-click="show = 2">Photos</a>
+                        <a href="" ng-click="show = 3">Friends</a>
                     </div>
                     <div class="user-name">
                         <p>{{isCurrentUser ? user.fullName : profile.fullName}}</p>
@@ -82,44 +83,46 @@
     <div class="row" ng-show="show == 2">
         <div class="col-lg-12">
             <!--======================== ADD PHOTO =====================================-->
-            <div id="add-photo" class="panel panel-default photos-panel" ng-controller="photosController" >
+            <div id="add-photo" class="panel panel-default photos-panel" ng-controller="photosController">
                 <div class="panel-heading">
                     <div class="pull-left">
                         <h4><i class="fa fa-camera-retro" aria-hidden="true"></i> Photos</h4>
                     </div>
                     <div class="pull-right">
                         <button id="uploadPhotoBtn" type="button" class="btn btn-default btn comment-btn"
-                                ng-click="showPhotoUploader = !showPhotoUploader"><i class="fa fa-picture-o" aria-hidden="true"></i> Add Photo
+                                ng-click="showPhotoUploader = !showPhotoUploader"><i class="fa fa-picture-o"
+                                                                                     aria-hidden="true"></i> Add Photo
                         </button>
                     </div>
                 </div>
                 <div>
                     <div class="overlay" ng-show="showPhotoUploader == true"></div>
-                        <div id="uploadPhoto" ng-show="showPhotoUploader == true">
-                            <div class="pull-right close-photo" ng-click="showPhotoUploader = !showPhotoUploader" ><i class="fa fa-times fa-2x" aria-hidden="true"></i>
-                            </div>
-                            <div class="content-upload">
-                                <form method="POST" action="/user/uploadphoto" enctype="multipart/form-data">
-                                    <div class="upload-title">
-                                        <label for="photoName">Image Title</label>
-                                        <input type="text" id="photoName" placeholder="Add title" name="title" required>
-                                    </div>
-                                    <div class="upload-location">
-                                        <label for="photoLocation">Location</label>
-                                        <input type="text" id="photoLocation" placeholder="Add Location" name="location"
-                                               required>
-                                    </div>
-                                    <div class="upload-btns">
-                                        <input id="choosePhoto" type="file" name="addPhoto" value="Add Photo" required>
-                                        <label for="choosePhoto" class="btn btn-default btn comment-btn">Choose
-                                            File</label>
-                                        <button id="uploadPhotoGallery" class="btn btn-default btn comment-btn"
-                                                ng-click="showPhotoGallery()">Upload Photo
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                    <div id="uploadPhoto" ng-show="showPhotoUploader == true">
+                        <div class="pull-right close-photo" ng-click="showPhotoUploader = !showPhotoUploader"><i
+                                class="fa fa-times fa-2x" aria-hidden="true"></i>
                         </div>
+                        <div class="content-upload">
+                            <form method="POST" action="/user/uploadphoto" enctype="multipart/form-data">
+                                <div class="upload-title">
+                                    <label for="photoName">Image Title</label>
+                                    <input type="text" id="photoName" placeholder="Add title" name="title" required>
+                                </div>
+                                <div class="upload-location">
+                                    <label for="photoLocation">Location</label>
+                                    <input type="text" id="photoLocation" placeholder="Add Location" name="location"
+                                           required>
+                                </div>
+                                <div class="upload-btns">
+                                    <input id="choosePhoto" type="file" name="addPhoto" value="Add Photo" required>
+                                    <label for="choosePhoto" class="btn btn-default btn comment-btn">Choose
+                                        File</label>
+                                    <button id="uploadPhotoGallery" class="btn btn-default btn comment-btn"
+                                            ng-click="showPhotoGallery()">Upload Photo
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <!--===================== LOAD ALL PHOTOS ===============================-->
                 <div class="panel-body" style="padding-bottom: 15px;">

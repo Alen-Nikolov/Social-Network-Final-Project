@@ -1,7 +1,7 @@
 app.controller('postController', ['$scope', '$http', '$rootScope', 'postService', 'userService', function ($scope, $http, $rootScope, postService, userService) {
     // =========== LOAD ALL POSTS =============
     var postPicture = null;
-    var postText='';
+    var postText = '';
     postService.downloadPosts().then(function (res) {
         $scope.posts = res.data;
 
@@ -20,8 +20,6 @@ app.controller('postController', ['$scope', '$http', '$rootScope', 'postService'
 
     /**
      * A function that sends new posts to server
-     * @param {file} postPicture the image to send to server
-     * @param {string} postText the text of the post
      */
     $scope.uploadFile = function () {
         postPicture = $scope.postPicture;

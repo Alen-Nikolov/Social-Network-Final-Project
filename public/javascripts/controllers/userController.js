@@ -39,12 +39,14 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
             $scope.showPhotoUploader = false;
             // ===================== ADD PHOTO BUTTON - MODAL WINDOW ==============
             $scope.uploadPhoto = function () {
-                // $(".overlay, #uploadPhoto").show();
-                //
-                // $(".close-photo").on('click', function () {
-                //     $(".overlay, #uploadPhoto").hide();
-                // });
-                $scope.showPhotoUploader=!$scope.showPhotoUploader;
+
+                // TODO: REFACTOR!!!
+                $(".overlay, #uploadPhoto").show();
+
+                $(".close-photo").on('click', function () {
+                    $(".overlay, #uploadPhoto").hide();
+                });
+                $scope.showPhotoUploader = !$scope.showPhotoUploader;
             };
 
             //show upload photo button
