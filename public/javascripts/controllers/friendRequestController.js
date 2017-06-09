@@ -1,6 +1,6 @@
-app.controller('friendRequestController', ['$scope', 'userService', function($scope, userService) {
+app.controller('friendRequestController', ['$scope', 'friendRequestService', function($scope, friendRequestService) {
     //============= LOAD ALL FRIEND REQUESTS ================
-    userService.downloadFriendRequests().then(function(res) {
+    friendRequestService.downloadFriendRequests().then(function(res) {
         $scope.friendRequests = res.data;
         $scope.someRequests = $scope.friendRequests.slice(0, 5);
         $scope.loadMore = function() {
