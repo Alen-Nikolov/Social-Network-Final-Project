@@ -4,14 +4,14 @@
             <div class="panel panel-default img-panel ">
                 <div class="photos">
                     <form method="POST" action="/user/coverAvatar" enctype="multipart/form-data">
-                        <div class="cover-photo" ng-mouseover = "showBtnCover = true" ng-mouseleave = "showBtnCover = false">
+                        <div class="cover-photo" ng-mouseover="showBtnCover = true" ng-mouseleave="showBtnCover = false">
                             <a class="thumbnail fancybox cover-fancybox"
                                ng-href="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}">
                                 <img ng-src="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}"
                                      err-src="../images/cover-photo.jpg" alt="cover photo">
                             </a>
                             <input id="addCoverImg" type="file" name="cover" onchange="this.form.submit();">
-                            <label for="addCoverImg" class="addCoverImg" ng-show = "showBtnCover">add Cover photo</label>
+                            <label for="addCoverImg" class="addCoverImg" ng-show="showBtnCover">add Cover photo</label>
                         </div>
                         <div class="profile-photo" ng-mouseover="showBtnAvatar=true"
                              ng-mouseleave="showBtnAvatar=false">
@@ -21,12 +21,13 @@
                                      err-src="../images/profile.jpg" alt="profile photo">
                             </a>
                             <input id="addProfImg" type="file" name="avatar" onchange="this.form.submit();">
-                            <label for="addProfImg" class="addProfImg" ng-show = "showBtnAvatar">add Avatar</label>
+                            <label for="addProfImg" class="addProfImg" ng-show="showBtnAvatar">add Avatar</label>
                         </div>
                     </form>
                 </div>
                 <div class="panel-heading text-left btns-username">
                     <div class="btn-menu">
+                        <!--TODO make constants insted of 1,2,3-->
                         <a href="" ng-click="show = 1">Timeline</a>
                         <a href="" ng-click="show = 2">Photos</a>
                         <a href="" ng-click="show = 3">Friends</a>
@@ -39,6 +40,7 @@
         </div>
     </div>
     <!--======================================POSTS==============================================-->
+    <!--TODO remove 1 and put constant-->
     <div class="row" ng-show="show == 1 || show == undefined">
         <div class="col-lg-8" ng-controller="postController">
             <!--============================= NEW POST ========================================-->
@@ -80,6 +82,7 @@
     </div>
 
     <!--================================= PHOTOS =======================================-->
+    <!--TODO Remove 1 and put constant-->
     <div class="row" ng-show="show == 2">
         <div class="col-lg-12">
             <!--======================== ADD PHOTO =====================================-->
@@ -140,6 +143,7 @@
         </div>
     </div>
     <!--=================================FRIENDS==============================================-->
+    <!--TODO remove 3 and put constant-->
     <div class="row" ng-show="show==3" ng-controller="friendsController">
         <div class="col-lg-12">
             <div class="panel panel-default photos-panel">
