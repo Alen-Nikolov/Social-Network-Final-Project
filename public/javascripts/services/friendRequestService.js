@@ -4,6 +4,7 @@
 app.factory('friendRequestService', function ($http) {
     function FriendRequests() {
         this.friendRequests = null;
+        this.friends = null;
     }
     FriendRequests.prototype.downloadFriendRequests = function () {
         return this.friendRequests = $http.get('/user/allfriendsrequests');

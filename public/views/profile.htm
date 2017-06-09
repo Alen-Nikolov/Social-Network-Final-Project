@@ -13,8 +13,8 @@
                             <input id="addCoverImg" type="file" name="cover" onchange="this.form.submit();">
                             <label for="addCoverImg" class="addCoverImg" ng-show="showBtnCover">add Cover photo</label>
                         </div>
-                        <div class="profile-photo" ng-mouseover="showBtnAvatar=true"
-                             ng-mouseleave="showBtnAvatar=false">
+                        <div class="profile-photo" ng-mouseover="showBtnAvatar = true"
+                             ng-mouseleave="showBtnAvatar = false">
                             <a class="thumbnail fancybox avatar-fancybox"
                                ng-href="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}">
                                 <img ng-src="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}"
@@ -27,7 +27,7 @@
                 </div>
                 <div class="panel-heading text-left btns-username">
                     <div class="btn-menu">
-                        <!--TODO make constants insted of 1,2,3-->
+                        <!--TODO make constants instead of 1,2,3-->
                         <a href="" ng-click="show = 1">Timeline</a>
                         <a href="" ng-click="show = 2">Photos</a>
                         <a href="" ng-click="show = 3">Friends</a>
