@@ -34,6 +34,7 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
             addBtnOnHover('.profile-photo', '.addProfImg');
             addBtnOnHover('.cover-photo', '.addCoverImg');
             //show input add new post
+            //TODO show the textarea for writing a post in profile.htm
             $('.addPost').show();
 
             $scope.showPhotoUploader = false;
