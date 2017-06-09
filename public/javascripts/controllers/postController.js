@@ -1,7 +1,10 @@
-app.controller('postController', ['$scope', 'postService', 'userService', function ($scope, postService, userService) {
+app.controller('postController', ['$scope', '$http', '$rootScope', 'postService', 'userService', function ($scope, $http, $rootScope, postService, userService) {
     // =========== LOAD ALL POSTS =============
+    var postPicture = null;
+    var postText = '';
     postService.downloadPosts().then(function (res) {
         $scope.posts = res.data;
+
         $scope.posts.forEach((post) => {
             return post.date = new Date(post.date).toLocaleDateString('en-GB');
         });
@@ -14,5 +17,31 @@ app.controller('postController', ['$scope', 'postService', 'userService', functi
     userService.getCurrentUser().then(function (res) {
         $scope.user = res.data;
     });
+
+    /**
+     * A function that sends new posts to server
+     */
+    $scope.uploadFile = function () {
+        postPicture = $scope.postPicture;
+        postText = $scope.postText;
+        var uploadUrl = "/posts/";
+        var fd = new FormData();
+
+        //check if text is empty or undefined
+        if (postText) {
+            fd.append('text', postText);
+            fd.append('file', postPicture);
+
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).success(function (data) {
+                data.date = new Date(data.date).toLocaleDateString('en-GB');
+                $scope.posts.unshift(data);
+                $scope.postText = '';
+                $scope.postPicture = null;
+            });
+        }
+    };
 
 }]);

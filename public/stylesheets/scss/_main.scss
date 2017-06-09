@@ -704,7 +704,6 @@ a.change-color {
 }
 
 .addProfImg {
-  display: none;
   position: absolute;
   top: 105px;
   left: 7px;
@@ -720,7 +719,6 @@ a.change-color {
 }
 
 .addCoverImg {
-  display: none;
   position: absolute;
   top: 161px;
   right: 0px;
@@ -832,17 +830,15 @@ div.btns-username {
   opacity: 0.6;
   z-index: 1050;
   filter: alpha(opacity=60);
-  display: none;
 }
 
 #uploadPhoto {
   position: fixed;
-  top: 25%;
-  left: 30%;
+  top: 28%;
+  left: 37%;
   width: 500px;
   height: 300px;
   z-index: 1055;
-  display: none;
   background-color: white;
   border-radius: 3px;
 }

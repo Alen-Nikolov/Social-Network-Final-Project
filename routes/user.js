@@ -218,10 +218,9 @@ router.post('/confirm/:reqFriendId', function (req, res) {
 
     users.update({ _id: userID }, { $pull: { receiveFriendRequests: reqFriendId } });
     users.update({ _id: userID }, { $addToSet: { friends: reqFriendId } });
-
     users.update({ _id: reqFriendId }, { $pull: { sendFriendRequests: userID } });
     users.update({ _id: reqFriendId }, { $addToSet: { friends: userID } });
-    res.status(201);
+    res.status(201).json({});
 });
 
 // ====================== REJECT FRIEND REQUEST ====================
@@ -233,7 +232,7 @@ router.post('/reject/:reqFriendId', function (req, res) {
 
     users.update({ _id: userID }, { $pull: { receiveFriendRequests: reqFriendId } });
     users.update({ _id: reqFriendId }, { $pull: { sendFriendRequests: userID } });
-    res.status(201);
+    res.status(201).json({});
 });
 
 // ====================== LOAD ALL FRIENDS =========================
