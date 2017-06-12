@@ -1,14 +1,13 @@
-app.controller('userController', ['$http', '$scope', '$rootScope', 'userService', function ($http, $scope, $rootScope, userService) {
-    var url = window.location.href;
-    var userId = url.substring(url.lastIndexOf('/') + 1);
-
+app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope', 'userService', function ($http, $scope, $routeParams, $rootScope, userService) {
+    var userId = $routeParams.userId;
+    var POSTS_TO_SHOW = 5;
     // ================== LOAD ALL USER POSTS ===================
     if (userId) {
         userService.downloadUserPosts(userId).then(function (res) {
             $scope.posts = res.data;
-            $scope.somePosts = $scope.posts.slice(0, 5);
+            $scope.somePosts = $scope.posts.slice(0, POSTS_TO_SHOW);
             $scope.loadMore = function () {
-                $scope.somePosts = $scope.posts.slice(0, $scope.somePosts.length + 5);
+                $scope.somePosts = $scope.posts.slice(0, $scope.somePosts.length + POSTS_TO_SHOW);
             };
         });
     }
@@ -17,45 +16,15 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
     userService.getCurrentUser().then(function (res) {
         $rootScope.user = res.data[0];
         $scope.isCurrentUser = true;
-        if (userId === $rootScope.user._id || userId === "") {
+        if (userId === $rootScope.user._id || userId === "" || userId === undefined) {
             $scope.isCurrentUser = true;
-            // ===================== BUTTONS FOR UPLOADING AVATAR/COVER PHOTOS ==========
-            function addBtnOnHover(imgDiv, btn) {
-                $(imgDiv).hover(
-                    function () {
-                        $(btn).show()
-                    },
-                    function () {
-                        $(btn).hide()
-                    });
-            }
-
-            addBtnOnHover('.profile-photo', '.addProfImg');
-            addBtnOnHover('.cover-photo', '.addCoverImg');
-            //show input add new post
-            //TODO show the textarea for writing a post in profile.htm
-            $('.addPost').show();
-
-            $scope.showPhotoUploader = false;
-            // ===================== ADD PHOTO BUTTON - MODAL WINDOW ==============
-            $scope.uploadPhoto = function () {
-                // $(".overlay, #uploadPhoto").show();
-                //
-                // $(".close-photo").on('click', function () {
-                //     $(".overlay, #uploadPhoto").hide();
-                // });
-                $scope.showPhotoUploader=!$scope.showPhotoUploader;
-            };
-
-            //show upload photo button
-            $('#uploadPhotoBtn').show();
-
+            //if it's the current user- show add-post, photoUploader
+            $scope.showAddPost = true;
+            $scope.showUploadPhotoBtn = true;
         } else {
             $scope.isCurrentUser = false;
-            //hide input add new post
-            $('.addPost').hide();
-            //hide upload photo button
-            $('#uploadPhotoBtn').hide();
+            $scope.showAddPost = false;
+            $scope.showUploadPhotoBtn = false;
             //================== GET USER PROFILE =====================
             userService.getUserProfile(userId).then(function (res) {
                 $rootScope.profile = res.data[0];
@@ -66,30 +35,22 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
 
     // ============= SEARCH USER BY FULL NAME ================
     $scope.filterUsers = function () {
-        var userName = $('.search').val();
-
         function loadUsersByName() {
-            userService.getUsers(userName).then(function (res) {
+            userService.getUsers($scope.searchFriendsInput).then(function (res) {
                 $scope.users = res.data;
             });
         }
 
-        setTimeout(loadUsersByName, 500);
+        setTimeout(loadUsersByName, 300);
     };
 
     // ================= SHOW DROP DOWN WITH FOUND USERS BY FULL NAME  =========
     $scope.showUsers = function () {
-        if ($('.search').val() !== "") {
-            $('.searchFriends').show();
+        if ($scope.searchFriendsInput !== "") {
+            $scope.searchFriendsDiv = true;
         } else {
-            $('.searchFriends').hide();
+            $scope.searchFriendsDiv = false;
         }
-        $('body').on('click', function (evt) {
-            if (evt.target.id === "searchFriendsInput" || evt.target.className === "searchFriends") {
-                return;
-            }
-            $('.searchFriends').hide();
-        })
     };
 
     // ===================== SHOW USER TIMELINE FIRST =====================
@@ -98,8 +59,7 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
 
     // ======================= ADD UPLOAD PICTURE TO POST ==================
     $scope.addImageBtnPost = function () {
-        $('.create-post input[type=file]').click();
+        angular.element('.create-post input[type=file]').trigger('click');
     };
-
 
 }]);

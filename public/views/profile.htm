@@ -92,8 +92,8 @@
                         <h4><i class="fa fa-camera-retro" aria-hidden="true"></i> Photos</h4>
                     </div>
                     <div class="pull-right">
-                        <button id="uploadPhotoBtn" type="button" class="btn btn-default btn comment-btn"
-                                ng-click="showPhotoUploader = !showPhotoUploader"><i class="fa fa-picture-o"
+                        <button id="uploadPhotoBtn" type="button" ng-show="showUploadPhotoBtn" class="btn btn-default btn comment-btn"
+                                ng-click="showPhotoUploader = true"><i class="fa fa-picture-o"
                                                                                      aria-hidden="true"></i> Add Photo
                         </button>
                     </div>
@@ -101,7 +101,7 @@
                 <div>
                     <div class="overlay" ng-show="showPhotoUploader == true"></div>
                     <div id="uploadPhoto" ng-show="showPhotoUploader == true">
-                        <div class="pull-right close-photo" ng-click="showPhotoUploader = !showPhotoUploader"><i
+                        <div class="pull-right close-photo" ng-click="showPhotoUploader = false"><i
                                 class="fa fa-times fa-2x" aria-hidden="true"></i>
                         </div>
                         <div class="content-upload">
