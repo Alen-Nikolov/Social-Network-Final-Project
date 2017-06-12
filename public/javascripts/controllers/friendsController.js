@@ -1,5 +1,4 @@
 app.controller('friendsController', ['$scope','$routeParams', 'friendRequestService', function($scope, $routeParams, friendRequestService) {
-    var url = window.location.href;
     var userId = $routeParams.userId;
     //============= LOAD ALL FRIENDS ================
     friendRequestService.downloadFriends(userId).then(function(res) {
