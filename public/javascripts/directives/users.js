@@ -28,7 +28,7 @@ app.directive('users', ['$rootScope', "friendRequestService", function($rootScop
             //=============== SEND FRIEND REQUEST =========
 
             scope.sendFriendRequest = function($event) {
-                userService.sendFriendRequest(userId).then(function(data) {
+                friendRequestService.sendFriendRequest(userId).then(function(data) {
                     $($event.currentTarget).hide();
                     $($event.currentTarget.parentNode).append('<p>Friend request sent</p>')
                 })
