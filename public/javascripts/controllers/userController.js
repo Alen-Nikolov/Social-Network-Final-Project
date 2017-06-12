@@ -1,6 +1,23 @@
 app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope', 'userService', function ($http, $scope, $routeParams, $rootScope, userService) {
     var userId = $routeParams.userId;
     var POSTS_TO_SHOW = 5;
+    var TIMEOUT_ON_KEYPRESS = 300;
+
+    function loadUsersByName() {
+        userService.getUsers($scope.searchFriendsInput).then(function (res) {
+            $scope.users = res.data;
+        });
+    }
+
+    var delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+
     // ================== LOAD ALL USER POSTS ===================
     if (userId) {
         userService.downloadUserPosts(userId).then(function (res) {
@@ -35,13 +52,7 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
 
     // ============= SEARCH USER BY FULL NAME ================
     $scope.filterUsers = function () {
-        function loadUsersByName() {
-            userService.getUsers($scope.searchFriendsInput).then(function (res) {
-                $scope.users = res.data;
-            });
-        }
-
-        setTimeout(loadUsersByName, 300);
+        delay(loadUsersByName,300);
     };
 
     // ================= SHOW DROP DOWN WITH FOUND USERS BY FULL NAME  =========
