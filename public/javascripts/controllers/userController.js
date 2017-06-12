@@ -32,6 +32,7 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
         }
     });
 
+
     // ============= SEARCH USER BY FULL NAME ================
     $scope.filterUsers = function () {
         function loadUsersByName() {
@@ -39,6 +40,7 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
                 $scope.users = res.data;
             });
         }
+
         setTimeout(loadUsersByName, 300);
     };
 
@@ -58,4 +60,7 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
     $scope.addImageBtnPost = function () {
         angular.element('.create-post input[type=file]').trigger('click');
     };
+    $scope.closeDivUsers = function () {
+        $scope.searchFriendsDiv = false;
+    }
 }]);
