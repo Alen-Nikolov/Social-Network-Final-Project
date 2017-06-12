@@ -1,7 +1,6 @@
-app.controller('friendsController', ['$scope', 'friendRequestService', function($scope, friendRequestService) {
+app.controller('friendsController', ['$scope','$routeParams', 'friendRequestService', function($scope, $routeParams, friendRequestService) {
     var url = window.location.href;
-    var userId = url.substring(url.lastIndexOf('/') + 1);
-
+    var userId = $routeParams.userId;
     //============= LOAD ALL FRIENDS ================
     friendRequestService.downloadFriends(userId).then(function(res) {
         $scope.friends = res.data;
@@ -10,5 +9,4 @@ app.controller('friendsController', ['$scope', 'friendRequestService', function(
             $scope.someFriends = $scope.friends.slice(0, $scope.someFriends.length + 20);
         };
     });
-
 }]);
