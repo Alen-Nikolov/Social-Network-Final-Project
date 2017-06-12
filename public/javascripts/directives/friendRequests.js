@@ -1,4 +1,4 @@
-app.directive('friendRequests', ["userService", function (userService) {
+app.directive('friendRequests', ["friendRequestService", function (friendRequestService) {
     return {
         restrict: 'E',
         scope: {
@@ -13,13 +13,13 @@ app.directive('friendRequests', ["userService", function (userService) {
             scope.requestVisible = scope.PENDING;
             //  =============== CONFIRM FRIEND REQUEST =========
             scope.confirmRequest = function () {
-                userService.confirmRequest(reqFriendId).then(function (data) {
+                friendRequestService.confirmRequest(reqFriendId).then(function (data) {
                     scope.requestVisible = scope.ACCEPTED;
                 });
             };
             //  =============== REJECT FRIEND REQUEST =========
             scope.rejectRequest = function () {
-                userService.rejectRequest(reqFriendId).then(function (data) {
+                friendRequestService.rejectRequest(reqFriendId).then(function (data) {
                     scope.requestVisible = scope.REJECTED;
                 });
             };

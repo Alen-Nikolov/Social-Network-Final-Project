@@ -6,7 +6,6 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
     if (userId) {
         userService.downloadUserPosts(userId).then(function (res) {
             $scope.posts = res.data;
-
             $scope.somePosts = $scope.posts.slice(0, 5);
             $scope.loadMore = function () {
                 $scope.somePosts = $scope.posts.slice(0, $scope.somePosts.length + 5);
@@ -34,6 +33,7 @@ app.controller('userController', ['$http', '$scope', '$rootScope', 'userService'
             addBtnOnHover('.profile-photo', '.addProfImg');
             addBtnOnHover('.cover-photo', '.addCoverImg');
             //show input add new post
+            //TODO show the textarea for writing a post in profile.htm
             $('.addPost').show();
 
             $scope.showPhotoUploader = false;
