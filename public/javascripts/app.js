@@ -40,6 +40,7 @@ app.directive('fileModel', ['$parse', function ($parse) {
 //Close the div with the users when the user clicks outside of it
 app.directive("outsideClick", ['$document','$parse', function( $document, $parse ){
     return {
+        restrict:'A',
         link: function( $scope, $element, $attributes ){
             var scopeExpression = $attributes.outsideClick,
                 onDocumentClick = function(event){
