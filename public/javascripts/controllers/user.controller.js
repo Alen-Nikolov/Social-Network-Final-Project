@@ -49,7 +49,7 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
 
             //================== GET USER PROFILE =====================
             userService.getUserProfile(userId).then(function (res) {
-                $rootScope.profile = res.data[0];
+                $rootScope.profile = res.data;
             });
         }
     });

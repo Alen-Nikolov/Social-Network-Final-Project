@@ -82,7 +82,7 @@ router.get('/:userId', function (req, res) {
     var userId = req.params.userId;
 
     users.find({ _id: userId }, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "receiveFriendRequests", "sendFriendRequests", "friends"]).then(function (user) {
-        res.json(user);
+        res.json(user[0]);
     });
 });
 

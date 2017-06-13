@@ -1,6 +1,6 @@
 var directivesModule = angular.module('directivesModule', []);
 
-myModule.directive('errSrc', function () {
+directivesModule.directive('errSrc', function () {
     return {
         link: function (scope, element, attrs) {
             element.bind('error', function () {
@@ -12,7 +12,7 @@ myModule.directive('errSrc', function () {
     }
 });
 
-myModule.directive('fileModel', ['$parse', function ($parse) {
+directivesModule.directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
@@ -27,7 +27,7 @@ myModule.directive('fileModel', ['$parse', function ($parse) {
     };
 }]);
 
-myModule.directive('outsideClick', ['$document', '$parse', function ($document, $parse) {
+directivesModule.directive('outsideClick', ['$document', '$parse', function ($document, $parse) {
     return {
         restrict: 'A',
         link: function ($scope, $element, $attributes) {
