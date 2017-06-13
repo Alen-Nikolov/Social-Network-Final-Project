@@ -6,160 +6,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAJ1njAAD/KgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERAAAAAAAAAREAAAAAAAABEQAAAAIiIiIiIiIiACIiIiIiIiAAAiIiIiIiAAAAIiIiIiAAAAACIiIiAAAAAAAiIiAAAAAAAAIiAAAAAAAAACAAAAAAACIiIiIgAAAAAiIiIgAAAAAAIiIgAAAAAAACIgAAAAAAAAAgAAAAD8fwAA/H8AAPx/AAAAAQAAgAMAAMAHAADgDwAA8B8AAPg/AAD8fwAA/v8AAOAPAADwHwAA+D8AAPx/AAD+/wAA"
-        rel="icon" type="image/x-icon" />
+          rel="icon" type="image/x-icon"/>
 
     <title>HUMAN</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans|Work+Sans" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin=" anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin=" anonymous"></script>
     <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.14/angular.min.js"></script>
-    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.14/angular-route.js"></script>
+    <script type='text/javascript'
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.14/angular-route.js"></script>
     <script src="./javascripts/ng-infinite-scroll.min.js"></script>
     <script src="./javascripts/autogrow.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
+          media="screen">
     <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
 </head>
 
 <body ng-app="myApp">
-    <div id="wrapper" ng-controller="userController">
+<div id="wrapper" ng-controller="userController">
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top navbar-fixed-top" role="navigation" style="margin-bottom: 0">
-            <div class="col-xs-4 col-sm-4 col-md-2 col-lg-3 navbar-header">
+    <!-- Navigation -->
+    <nav-bar></nav-bar>
 
-                <a class="navbar-brand" href="#/">human</a>
-            </div>
-            <div class="col-xs-8 col-sm-8 col-md-3 col-lg-3 input-search custom-search-form">
-                <input id="searchFriendsInput" type="text" class="form-control search" ng-focus="showUsers()" ng-keyup="filterUsers(); showUsers()" placeholder="Find a friend...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-                </span>
-                <div class="searchFriends">
-                    <div ng-repeat="user in users">
-                        <users data='user'></users>
+    <main ng-view></main>
+    <!--======================= CHAT ===================================== -->
+    <div class="col-lg-4" ng-controller="chatUsersController">
+        <div class="chat-fixed">
+            <div class="input-search custom-search-form slide-toggle">
+                <input id="searchFriendsInputChat" type="text" class="form-control searchChat"
+                       ng-focus="showUsersForChat()" ng-keyup="filterUsersForChat(); showUsersForChat()"
+                       placeholder="Find a friend...">
+                <div class="searchFriendsChat">
+                    <div ng-repeat="chat in chatUsers">
+                        <chat-users data='chat'></chat-users>
                     </div>
                 </div>
             </div>
+            <div class="chat-panel panel panel-default">
+                <div class=" panel-heading chat-window" ng-click="hideShowChat()">
 
-            <ul class="col-xs-12 col-sm-12 col-md-7 col-lg-6 nav navbar-top-links navbar-center">
-                <li class="dropdown">
-                    <a href="#/"><i class="fa fa-newspaper-o" aria-hidden="true"></i> News feed</a>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                        <i class="fa fa-user-plus" aria-hidden="true"></i> Friend Requests
-                    </a>
-                    <ul class="dropdown-menu dropdown-fr-requests">
-
-                        <p><strong>Friend Requests</strong></p>
-
-                        <div ng-controller="friendRequestController">
-                            <div infinite-scroll='loadMore()'>
-                                <div ng-repeat="friend in someRequests">
-                                    <friend-requests data='friend'></friend-requests>
-                                </div>
+                    <div>
+                        <i class="fa fa-comments fa-fw"></i> Chat <span class="friendName"> </span>
+                    </div>
+                </div>
+                <form id="chat-form" class="slide-toggle">
+                    <div class="panel-body" id='chatDivScroll'>
+                        <ul class="chat">
+                            <div ng-repeat="msg in messages" class="listWithMessages">
+                                <li class='left clearfix'><strong
+                                        ng-class="{redText : msg.name == $root.user.fullName}"> {{msg.name}}</strong>:
+                                    {{msg.text}}
+                                </li>
                             </div>
-                        </div>
-                    </ul>
-                    <!-- /.dropdown-fr-requests-->
-                </li>
-                <!-- /.dropdown -->
-
-                <li class="dropdown">
-                    <a href="#/profile/{{user._id}}" id="link-profile" class="dropdown-toggle userName" data-toggle="dropdown">
-                        <img class="profile-img" ng-src="{{$root.user.PROFILE_IMG_URL}}" err-src="images/profile.jpg" alt="Profile pic"> {{user.fname + " " + user.lname}}
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-sliders" aria-hidden="true"> </i> Settings</a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
-        </nav>
-
-        <main ng-view></main>
-        <!--======================= CHAT ===================================== -->
-        <div class="col-lg-4" ng-controller="chatUsersController">
-            <div class="chat-fixed">
-                <div class="input-search custom-search-form slide-toggle">
-                    <input id="searchFriendsInputChat" type="text" class="form-control searchChat" ng-focus="showUsersForChat()" ng-keyup="filterUsersForChat(); showUsersForChat()" placeholder="Find a friend...">
-                    <div class="searchFriendsChat">
-                        <div ng-repeat="chat in chatUsers">
-                            <chat-users data='chat'></chat-users>
-                        </div>
+                        </ul>
                     </div>
-                </div>
-                <div class="chat-panel panel panel-default">
-                    <div class=" panel-heading chat-window" ng-click="hideShowChat()">
-
-                        <div>
-                            <i class="fa fa-comments fa-fw"></i> Chat <span class="friendName"> </span>
-                        </div>
-                    </div>
-                    <form id="chat-form" class="slide-toggle">
-                        <div class="panel-body" id='chatDivScroll'>
-                            <ul class="chat">
-                                <div ng-repeat="msg in messages" class="listWithMessages">
-                                    <li class='left clearfix'><strong ng-class="{redText : msg.name == $root.user.fullName}">  {{msg.name}}</strong>: {{msg.text}} </li>
-                                </div>
-                            </ul>
-                        </div>
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input-chat" type="text" maxlength="200" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="btn-input-chat" type="text" maxlength="200" class="form-control input-sm"
+                                   placeholder="Type your message here..."/>
+                            <span class="input-group-btn">
                             <button class="btn btn-chat">Send</button>
                                 </span>
-                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- /#wrapper -->
+</div>
+<!-- /#wrapper -->
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="javascripts/script.js"></script>
-    <script src="javascripts/menu.js"></script>
-    <script src="javascripts/chat.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="javascripts/script.js"></script>
+<script src="javascripts/menu.js"></script>
+<script src="javascripts/chat.js"></script>
 
-    <!-- modules -->
-    <script src="javascripts/app.js"></script>
+<!-- modules -->
+<script src="javascripts/app.js"></script>
+<script src="javascripts/directives.module.js"></script>
+<!-- services -->
+<script src="javascripts/services/postService.js"></script>
+<script src="javascripts/services/user.service.js"></script>
+<script src="javascripts/services/commentService.js"></script>
+<script src="javascripts/services/photoService.js"></script>
+<script src="javascripts/services/friend-request.service.js"></script>
 
-    <!-- services -->
-    <script src="javascripts/services/postService.js"></script>
-    <script src="javascripts/services/userService.js"></script>
-    <script src="javascripts/services/commentService.js"></script>
-    <script src="javascripts/services/photoService.js"></script>
-    <script src="javascripts/services/friendRequestService.js"></script>
-
-    <!-- controllers -->
-    <script src="javascripts/controllers/postController.js"></script>
-    <script src="javascripts/controllers/commentController.js"></script>
-    <script src="javascripts/controllers/userController.js"></script>
-    <script src="javascripts/controllers/photosController.js"></script>
-    <script src="javascripts/controllers/friendRequestController.js"></script>
-    <script src="javascripts/controllers/friendsController.js"></script>
-    <script src="javascripts/controllers/chatUsersController.js"></script>
-    <!-- directives -->
-    <script src="javascripts/directives/posts.js"></script>
-    <script src="javascripts/directives/comments.js"></script>
-    <script src="javascripts/directives/photos.js"></script>
-    <script src="javascripts/directives/users.js"></script>
-    <script src="javascripts/directives/friendRequests.js"></script>
-    <script src="javascripts/directives/friends.js"></script>
-    <script src="javascripts/directives/chatUsers.js"></script>
+<!-- controllers -->
+<script src="javascripts/controllers/postController.js"></script>
+<script src="javascripts/controllers/commentController.js"></script>
+<script src="javascripts/controllers/user.controller.js"></script>
+<script src="javascripts/controllers/photosController.js"></script>
+<script src="javascripts/controllers/friend-request.controller.js"></script>
+<script src="javascripts/controllers/friends.controller.js"></script>
+<script src="javascripts/controllers/chatUsersController.js"></script>
+<!-- directives -->
+<script src="javascripts/directives/posts.js"></script>
+<script src="javascripts/directives/comments.js"></script>
+<script src="javascripts/directives/photos.js"></script>
+<script src="javascripts/directives/users.js"></script>
+<script src="javascripts/directives/friend-requests.js"></script>
+<script src="javascripts/directives/friends.js"></script>
+<script src="javascripts/directives/chatUsers.js"></script>
+<script src="javascripts/directives/nav.js"></script>
 
 </body>
 

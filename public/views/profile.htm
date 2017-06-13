@@ -11,7 +11,7 @@
                                      err-src="../images/cover-photo.jpg" alt="cover photo">
                             </a>
                             <input id="addCoverImg" type="file" name="cover" onchange="this.form.submit();">
-                            <label for="addCoverImg" class="addCoverImg" ng-show="showBtnCover">add Cover photo</label>
+                            <label for="addCoverImg" class="addCoverImg" ng-show="showBtnCover && isCurrentUser">add Cover photo</label>
                         </div>
                         <div class="profile-photo" ng-mouseover="showBtnAvatar = true"
                              ng-mouseleave="showBtnAvatar = false">
@@ -21,7 +21,7 @@
                                      err-src="../images/profile.jpg" alt="profile photo">
                             </a>
                             <input id="addProfImg" type="file" name="avatar" onchange="this.form.submit();">
-                            <label for="addProfImg" class="addProfImg" ng-show="showBtnAvatar">add Avatar</label>
+                            <label for="addProfImg" class="addProfImg" ng-show="showBtnAvatar && isCurrentUser">add Avatar</label>
                         </div>
                     </form>
                 </div>
@@ -92,8 +92,8 @@
                         <h4><i class="fa fa-camera-retro" aria-hidden="true"></i> Photos</h4>
                     </div>
                     <div class="pull-right">
-                        <button id="uploadPhotoBtn" type="button" class="btn btn-default btn comment-btn"
-                                ng-click="showPhotoUploader = !showPhotoUploader"><i class="fa fa-picture-o"
+                        <button id="uploadPhotoBtn" type="button" ng-show="showUploadPhotoBtn" class="btn btn-default btn comment-btn"
+                                ng-click="showPhotoUploader = true"><i class="fa fa-picture-o"
                                                                                      aria-hidden="true"></i> Add Photo
                         </button>
                     </div>
@@ -101,7 +101,7 @@
                 <div>
                     <div class="overlay" ng-show="showPhotoUploader == true"></div>
                     <div id="uploadPhoto" ng-show="showPhotoUploader == true">
-                        <div class="pull-right close-photo" ng-click="showPhotoUploader = !showPhotoUploader"><i
+                        <div class="pull-right close-photo" ng-click="showPhotoUploader = false"><i
                                 class="fa fa-times fa-2x" aria-hidden="true"></i>
                         </div>
                         <div class="content-upload">
