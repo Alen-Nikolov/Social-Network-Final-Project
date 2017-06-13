@@ -1,4 +1,4 @@
-var myModule = angular.module('directivesModule', []);
+var directivesModule = angular.module('directivesModule', []);
 
 myModule.directive('errSrc', function () {
     return {
