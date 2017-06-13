@@ -9,10 +9,10 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
         });
     }
 
-    var delay = (function(){
+    var delay = (function () {
         var timer = 0;
-        return function(callback, ms){
-            clearTimeout (timer);
+        return function (callback, ms) {
+            clearTimeout(timer);
             timer = setTimeout(callback, ms);
         };
     })();
@@ -38,10 +38,15 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
             //if it's the current user- show add-post, photoUploader
             $scope.showAddPost = true;
             $scope.showUploadPhotoBtn = true;
+            $scope.showBtnAvatar = true;
+            $scope.showBtnCover = true;
         } else {
             $scope.isCurrentUser = false;
             $scope.showAddPost = false;
             $scope.showUploadPhotoBtn = false;
+            $scope.showBtnAvatar = false;
+            $scope.showBtnCover = false;
+
             //================== GET USER PROFILE =====================
             userService.getUserProfile(userId).then(function (res) {
                 $rootScope.profile = res.data[0];
@@ -52,7 +57,7 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
 
     // ============= SEARCH USER BY FULL NAME ================
     $scope.filterUsers = function () {
-        delay(loadUsersByName,300);
+        delay(loadUsersByName, TIMEOUT_ON_KEYPRESS);
     };
 
     // ================= SHOW DROP DOWN WITH FOUND USERS BY FULL NAME  =========
