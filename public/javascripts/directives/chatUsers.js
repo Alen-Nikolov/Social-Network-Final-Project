@@ -4,11 +4,6 @@ app.directive('chatUsers', ['$rootScope', 'userService', function($rootScope, us
         scope: {
             data: '='
         },
-        templateUrl: './javascripts/directives/chatUsers.htm',
-        link: function(scope, $element) {
-            scope.startChat = function($event) {
-
-            }
-        }
+        templateUrl: './javascripts/directives/chatUsers.htm'
     };
 }]);
