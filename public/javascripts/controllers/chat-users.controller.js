@@ -1,5 +1,5 @@
-app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delayService', 'userService',
-    function ($scope, $rootScope, $http, delayService, userService) {
+app.controller('chatUsersController', ['$scope', '$rootScope','$location', '$anchorScroll', '$http', 'delayService', 'userService',
+    function ($scope, $rootScope, $location, $anchorScroll, $http, delayService, userService) {
         // ============= SEARCH USER BY FULL NAME ================
         var TIMEOUT_ON_KEYPRESS_CHAT = 300;
         var receiverId = null;
