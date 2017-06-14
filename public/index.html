@@ -45,7 +45,7 @@
                        placeholder="Find a friend...">
                 <div class="searchFriendsChat" ng-if="showDivChatUsers">
                     <div ng-repeat="chat in chatUsers" ng-click="closeDivUsers()">
-                        <chat-users data='chat' messages="messages"></chat-users>
+                        <chat-users data='chat'></chat-users>
                     </div>
                 </div>
             </div>
@@ -59,10 +59,7 @@
                     <div class="panel-body" id='chatDivScroll'>
                         <ul class="chat">
                             <div ng-repeat="msg in messages" class="listWithMessages">
-                                <li class='left clearfix'><strong
-                                        ng-class="{redText : msg.name == $root.user.fullName}"> {{msg.name}}</strong>:
-                                    {{msg.text}}
-                                </li>
+                                <message data="msg"></message>
                             </div>
                         </ul>
                     </div>
@@ -116,6 +113,7 @@
 <script src="javascripts/directives/friend-requests.js"></script>
 <script src="javascripts/directives/friends.js"></script>
 <script src="javascripts/directives/chatUsers.js"></script>
+<script src="javascripts/directives/message.js"></script>
 <script src="javascripts/directives/nav.js"></script>
 <script src="javascripts/directives/slide-toggle.js"></script>
 
