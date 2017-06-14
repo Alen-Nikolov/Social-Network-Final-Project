@@ -40,18 +40,17 @@
     <div class="col-lg-4" ng-controller="chatUsersController">
         <div class="chat-fixed">
             <div class="input-search custom-search-form slide-toggle">
-                <input id="searchFriendsInputChat" type="text" class="form-control searchChat"
-                       ng-focus="showUsersForChat()" ng-keyup="filterUsersForChat(); showUsersForChat()"
+                <input id="searchFriendsInputChat" type="text"  class="form-control searchChat" ng-model="searchForChat"
+                       ng-focus="showUsersForChat();" ng-keyup="filterUsersForChat(); showUsersForChat()"
                        placeholder="Find a friend...">
-                <div class="searchFriendsChat">
-                    <div ng-repeat="chat in chatUsers">
+                <div class="searchFriendsChat" ng-if="showDivChatUsers">
+                    <div ng-repeat="chat in chatUsers" ng-click="closeDivUsers()">
                         <chat-users data='chat'></chat-users>
                     </div>
                 </div>
             </div>
             <div class="chat-panel panel panel-default">
-                <div class=" panel-heading chat-window" ng-click="hideShowChat()">
-
+                <div class=" panel-heading chat-window" data-slide-toggle=".slide-toggle">
                     <div>
                         <i class="fa fa-comments fa-fw"></i> Chat <span class="friendName"> </span>
                     </div>
@@ -72,7 +71,7 @@
                             <input id="btn-input-chat" type="text" maxlength="200" class="form-control input-sm"
                                    placeholder="Type your message here..."/>
                             <span class="input-group-btn">
-                            <button class="btn btn-chat">Send</button>
+                            <button class="btn btn-chat" ng-click="sendMessage()">Send</button>
                                 </span>
                         </div>
                     </div>
@@ -99,6 +98,8 @@
 <script src="javascripts/services/commentService.js"></script>
 <script src="javascripts/services/photoService.js"></script>
 <script src="javascripts/services/friend-request.service.js"></script>
+<script src="javascripts/services/delay.service.js"></script>
+
 
 <!-- controllers -->
 <script src="javascripts/controllers/postController.js"></script>
@@ -107,7 +108,7 @@
 <script src="javascripts/controllers/photosController.js"></script>
 <script src="javascripts/controllers/friend-request.controller.js"></script>
 <script src="javascripts/controllers/friends.controller.js"></script>
-<script src="javascripts/controllers/chatUsersController.js"></script>
+<script src="javascripts/controllers/chat-users.controller.js"></script>
 <!-- directives -->
 <script src="javascripts/directives/posts.js"></script>
 <script src="javascripts/directives/comments.js"></script>
@@ -117,6 +118,9 @@
 <script src="javascripts/directives/friends.js"></script>
 <script src="javascripts/directives/chatUsers.js"></script>
 <script src="javascripts/directives/nav.js"></script>
+<script src="javascripts/directives/slide-toggle.js"></script>
+
+
 
 </body>
 
