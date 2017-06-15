@@ -23,11 +23,7 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
 
         // ================= SHOW DROPDOWN WITH FOUND USERS BY FULL NAME  =========
         $scope.showUsersForChat = function () {
-            if ($scope.searchForChat == "") {
-                $scope.showDivChatUsers = false;
-            } else {
-                $scope.showDivChatUsers = true;
-            }
+            $scope.showDivChatUsers = $scope.searchForChat ? true : false
         };
 
         $scope.closeDivUsers = function () {
