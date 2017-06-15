@@ -4,6 +4,6 @@ app.directive('chatUsers', ['$rootScope', 'userService', function($rootScope, us
         scope: {
             data: '='
         },
-        templateUrl: './javascripts/directives/chat-users.htm'
+        templateUrl: './javascripts/directives/chat-users.directive.htm'
     };
 }]);

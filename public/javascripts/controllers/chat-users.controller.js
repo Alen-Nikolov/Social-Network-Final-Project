@@ -1,16 +1,13 @@
-app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delayService', 'userService',
-    function ($scope, $rootScope, $http, delayService, userService) {
+app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delayService', 'userService', 'socket',
+    function ($scope, $rootScope, $http, delayService, userService, socket) {
         var receiverId = null;
-        var socket = io.connect();
         var TIMEOUT_ON_KEYPRESS_CHAT = 300;
         var SEND_MESSAGE = 'send message';
         var NEW_MESSAGE = 'new message';
 
         /**
          * loads users by their name
-         * @param {string} userName
          */
-
         function loadUsersByName() {
             userService.getUsers($scope.searchForChat).then(function (res) {
                 $scope.chatUsers = res.data;
@@ -21,9 +18,12 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
             delayService.delay(loadUsersByName, TIMEOUT_ON_KEYPRESS_CHAT);
         };
 
-        // ================= SHOW DROPDOWN WITH FOUND USERS BY FULL NAME  =========
+
+        /**
+         * show the div with the users if there is something in the input field
+         */
         $scope.showUsersForChat = function () {
-            $scope.showDivChatUsers = $scope.searchForChat ? true : false
+            $scope.showDivChatUsers = $scope.searchForChat ? true : false;
         };
 
         $scope.closeDivUsers = function () {
@@ -60,16 +60,16 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
             }
             $scope.messageText = '';
 
-            socket.on(NEW_MESSAGE, function (data) {
-                var receiver = data.msg.receiverId;
-                var sender = data.msg.senderId;
-                if (receiver === $rootScope.user._id || sender === $rootScope.user._id) {
-                    if ($scope.messages.indexOf(data.msg) === -1) {
-                        $scope.messages.push(data.msg);
-                        $scope.$apply();
-                    }
-                }
-            });
-        };
 
+        };
+        socket.on(NEW_MESSAGE, function (data) {
+            var receiver = data.msg.receiverId;
+            var sender = data.msg.senderId;
+            if (receiver === $rootScope.user._id || sender === $rootScope.user._id) {
+                if ($scope.messages.indexOf(data.msg) === -1) {
+                    $scope.messages.push(data.msg);
+                    $scope.$apply();
+                }
+            }
+        });
     }]);
