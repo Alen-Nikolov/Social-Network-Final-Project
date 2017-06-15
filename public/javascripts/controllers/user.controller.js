@@ -65,8 +65,6 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
     $scope.show = 1;
 
     // ======================= ADD UPLOAD PICTURE TO POST ==================
-    $scope.addImageBtnPost = function () {
-    };
     $scope.closeDivUsers = function () {
         $scope.searchFriendsDiv = false;
     }
