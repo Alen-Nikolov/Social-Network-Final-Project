@@ -2,6 +2,10 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
     var userId = $routeParams.userId;
     var POSTS_TO_SHOW = 5;
     var TIMEOUT_ON_KEYPRESS = 300;
+    $scope.TIMELINE_PAGE = 1;
+    $scope.PHOTOS_PAGE = 2;
+    $scope.FRIENDS_PAGE = 3;
+
 
     function loadUsersByName() {
         userService.getUsers($scope.searchFriendsInput).then(function (res) {
@@ -57,16 +61,11 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
 
     // ================= SHOW DROP DOWN WITH FOUND USERS BY FULL NAME  =========
     $scope.showUsers = function () {
-        // if ($scope.searchFriendsInput !== "") {
-        //     $scope.searchFriendsDiv = true;
-        // } else {
-        //     $scope.searchFriendsDiv = false;
-        // }
         $scope.searchFriendsDiv = $scope.searchFriendsInput ? true : false;
     };
 
     // ===================== SHOW USER TIMELINE FIRST =====================
-    $scope.show = 1;
+    $scope.show = $scope.TIMELINE_PAGE;
 
     // ======================= ADD UPLOAD PICTURE TO POST ==================
     $scope.closeDivUsers = function () {
