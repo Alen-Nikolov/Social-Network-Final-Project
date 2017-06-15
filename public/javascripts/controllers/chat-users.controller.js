@@ -1,19 +1,24 @@
-app.controller('chatUsersController', ['$scope', '$rootScope','$location', '$anchorScroll', '$http', 'delayService', 'userService',
-    function ($scope, $rootScope, $location, $anchorScroll, $http, delayService, userService) {
-        // ============= SEARCH USER BY FULL NAME ================
-        var TIMEOUT_ON_KEYPRESS_CHAT = 300;
+app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delayService', 'userService',
+    function ($scope, $rootScope, $http, delayService, userService) {
         var receiverId = null;
         var socket = io.connect();
+        var TIMEOUT_ON_KEYPRESS_CHAT = 300;
+        var SEND_MESSAGE = 'send message';
+        var NEW_MESSAGE = 'new message';
 
-        function loadUsersByName(userName) {
-            userService.getUsers(userName).then(function (res) {
+        /**
+         * loads users by their name
+         * @param {string} userName
+         */
+
+        function loadUsersByName() {
+            userService.getUsers($scope.searchForChat).then(function (res) {
                 $scope.chatUsers = res.data;
             });
         }
 
         $scope.filterUsersForChat = function () {
-            var userName = $scope.searchForChat;
-            delayService.delay(loadUsersByName(userName), TIMEOUT_ON_KEYPRESS_CHAT);
+            delayService.delay(loadUsersByName, TIMEOUT_ON_KEYPRESS_CHAT);
         };
 
         // ================= SHOW DROPDOWN WITH FOUND USERS BY FULL NAME  =========
@@ -29,6 +34,11 @@ app.controller('chatUsersController', ['$scope', '$rootScope','$location', '$anc
             $scope.showDivChatUsers = false;
         };
 
+        /**
+         * Starts chat with the user that's chosen
+         * @param {string} friendId - friend's id from database
+         * @param {string} chatFriendName -the friend's fullName
+         */
         $scope.startChat = function (friendId, chatFriendName) {
             userService.getMessages(friendId).then(function (res) {
                 $scope.messages = res.data;
@@ -36,6 +46,10 @@ app.controller('chatUsersController', ['$scope', '$rootScope','$location', '$anc
                 $scope.friendName = chatFriendName;
             });
         };
+
+        /**
+         * Takes the message from the user and sends it through the socket in the form of an object
+         */
         $scope.sendMessage = function () {
             var text = $scope.messageText;
             if (receiverId && text) {
@@ -46,11 +60,11 @@ app.controller('chatUsersController', ['$scope', '$rootScope','$location', '$anc
                     senderId: $rootScope.user._id,
                     receiverId: receiverId
                 };
-                socket.emit('send message', message);
+                socket.emit(SEND_MESSAGE, message);
             }
             $scope.messageText = '';
 
-            socket.on("new message", function (data) {
+            socket.on(NEW_MESSAGE, function (data) {
                 var receiver = data.msg.receiverId;
                 var sender = data.msg.senderId;
                 if (receiver === $rootScope.user._id || sender === $rootScope.user._id) {
@@ -61,6 +75,5 @@ app.controller('chatUsersController', ['$scope', '$rootScope','$location', '$anc
                 }
             });
         };
-
 
     }]);
