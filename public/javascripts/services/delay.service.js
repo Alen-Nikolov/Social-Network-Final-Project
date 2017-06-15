@@ -1,6 +1,6 @@
 app.factory('delayService', function () {
     var timers = {};
-    var timer = 0;
+    var timer = null;
     return {
         delay: function (callback, ms) {
             clearTimeout(timers[timer]);

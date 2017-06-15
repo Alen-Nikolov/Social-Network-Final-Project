@@ -66,7 +66,6 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
 
     // ======================= ADD UPLOAD PICTURE TO POST ==================
     $scope.addImageBtnPost = function () {
-        angular.element('.create-post input[type=file]').trigger('click');
     };
     $scope.closeDivUsers = function () {
         $scope.searchFriendsDiv = false;

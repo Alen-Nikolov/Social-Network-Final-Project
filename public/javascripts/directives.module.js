@@ -51,14 +51,25 @@ directivesModule.directive('outsideClick', ['$document', '$parse', function ($do
 directivesModule.directive('slideToggle', function () {
     return {
         restrict: 'A',
-        scope: {},
         controller: function ($scope) {
         },
         link: function (scope, element, attr) {
             element.bind('click', function () {
+                var defaultSlideDuration = 400;
                 var $slideBox = angular.element(attr.slideToggle);
-                var slideDuration = parseInt(attr.slideToggleDuration, 10) || 200;
+                var slideDuration = parseInt(attr.slideToggleDuration, 10) || defaultSlideDuration;
                 $slideBox.stop().slideToggle(slideDuration);
+            });
+        }
+    };
+});
+directivesModule.directive('uploadfile', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element) {
+
+            element.bind('click', function (e) {
+                angular.element('.input-files').trigger('click');
             });
         }
     };
