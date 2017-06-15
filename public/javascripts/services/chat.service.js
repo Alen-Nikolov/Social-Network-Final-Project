@@ -1,3 +1,6 @@
+/**
+ * service for the socket of the chat
+ */
 app.factory('socket', function () {
     var socket = io.connect();
     return {

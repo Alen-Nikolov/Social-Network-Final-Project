@@ -9,8 +9,9 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
         });
     }
 
-
-    // ================== LOAD ALL USER POSTS ===================
+    /**
+     * If the user has logged in, download his posts
+     */
     if (userId) {
         userService.downloadUserPosts(userId).then(function (res) {
             $scope.posts = res.data;
@@ -21,7 +22,9 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
         });
     }
 
-    // ============= GET CURRENT USER/SHOW FRIENDS PROFILES =======================
+    /**
+     * checks if the user is looking at his own profile or someone else's
+     */
     userService.getCurrentUser().then(function (res) {
         $rootScope.user = res.data[0];
         $scope.isCurrentUser = true;
@@ -54,11 +57,12 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
 
     // ================= SHOW DROP DOWN WITH FOUND USERS BY FULL NAME  =========
     $scope.showUsers = function () {
-        if ($scope.searchFriendsInput !== "") {
-            $scope.searchFriendsDiv = true;
-        } else {
-            $scope.searchFriendsDiv = false;
-        }
+        // if ($scope.searchFriendsInput !== "") {
+        //     $scope.searchFriendsDiv = true;
+        // } else {
+        //     $scope.searchFriendsDiv = false;
+        // }
+        $scope.searchFriendsDiv = $scope.searchFriendsInput ? true : false;
     };
 
     // ===================== SHOW USER TIMELINE FIRST =====================
