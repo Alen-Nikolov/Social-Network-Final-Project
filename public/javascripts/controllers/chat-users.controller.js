@@ -48,7 +48,7 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
          */
         $scope.sendMessage = function () {
             var text = $scope.messageText;
-            if (receiverId && text) {
+            if (receiverId != undefined && text != "" && text != undefined) {
                 var message = {
                     name: $rootScope.user.fullName,
                     picture: $rootScope.user.PROFILE_IMG_URL,
@@ -59,9 +59,11 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
                 socket.emit(SEND_MESSAGE, message);
             }
             $scope.messageText = '';
-
-
         };
+
+        /**
+         * When a new message arrives put it into messages array and force the digest cycle to run
+         */
         socket.on(NEW_MESSAGE, function (data) {
             var receiver = data.msg.receiverId;
             var sender = data.msg.senderId;
