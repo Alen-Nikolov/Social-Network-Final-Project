@@ -8,9 +8,11 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
 
 
     function loadUsersByName() {
-        userService.getUsers($scope.searchFriendsInput).then(function (res) {
-            $scope.users = res.data;
-        });
+        if ($scope.searchFriendsInput != "") {
+            userService.getUsers($scope.searchFriendsInput).then(function (res) {
+                $scope.users = res.data;
+            });
+        }
     }
 
     /**

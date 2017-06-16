@@ -9,9 +9,11 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
          * loads users by their name
          */
         function loadUsersByName() {
-            userService.getUsers($scope.searchForChat).then(function (res) {
-                $scope.chatUsers = res.data;
-            });
+            if ($scope.searchForChat != "") {
+                userService.getUsers($scope.searchForChat).then(function (res) {
+                    $scope.chatUsers = res.data;
+                });
+            }
         }
 
         $scope.filterUsersForChat = function () {
