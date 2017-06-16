@@ -4,12 +4,18 @@
 app.factory('socketService', function () {
     var socket = io.connect();
     return {
-        newMessage: function (callback) {
-            socket.on('new message', function () {
-                callback(arguments[0]);
+        /**
+         * @param {any} callback - function to be executed when the event fires
+         */
+        onNewMessage: function (callback) {
+            socket.on('new message', function (message) {
+                callback(message);
             });
         },
-        sendMessage: function (data, callback) {
+        /**
+         * @param {any} data - message that is received
+         */
+        sendMessage: function (data) {
             socket.emit('send message', data, function () {
 
             });

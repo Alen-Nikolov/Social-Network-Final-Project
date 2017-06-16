@@ -7,13 +7,16 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
          * loads users by their name
          */
         function loadUsersByName() {
-            if ($scope.searchForChat != "") {
+            if ($scope.searchForChat !== "") {
                 userService.getUsers($scope.searchForChat).then(function (res) {
                     $scope.chatUsers = res.data;
                 });
             }
         }
 
+        /**
+         * Filters users by their name and fires events on keypress with delay
+         */
         $scope.filterUsersForChat = function () {
             delayService.delay(loadUsersByName, TIMEOUT_ON_KEYPRESS_CHAT);
         };
@@ -23,7 +26,7 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
          * show the div with the users if there is something in the input field
          */
         $scope.showUsersForChat = function () {
-            $scope.showDivChatUsers = $scope.searchForChat ? true : false;
+            $scope.showDivChatUsers = !!$scope.searchForChat;
         };
 
         $scope.closeDivUsers = function () {
@@ -48,7 +51,7 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
          */
         $scope.sendMessage = function () {
             var text = $scope.messageText;
-            if (receiverId != undefined && text != "" && text != undefined) {
+            if (receiverId !== undefined && text !== "" && text !== undefined) {
                 var message = {
                     name: $rootScope.user.fullName,
                     picture: $rootScope.user.PROFILE_IMG_URL,
@@ -64,7 +67,7 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
         /**
          * When a new message arrives put it into messages array and force the digest cycle to run
          */
-        socketService.newMessage(function (data) {
+        socketService.onNewMessage(function (data) {
             var receiver = data.msg.receiverId;
             var sender = data.msg.senderId;
             if (receiver === $rootScope.user._id || sender === $rootScope.user._id) {
