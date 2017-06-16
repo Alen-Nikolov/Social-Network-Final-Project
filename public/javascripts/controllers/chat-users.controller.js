@@ -1,9 +1,7 @@
-app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delayService', 'userService', 'socket',
-    function ($scope, $rootScope, $http, delayService, userService, socket) {
+app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delayService', 'userService', 'socketService',
+    function ($scope, $rootScope, $http, delayService, userService, socketService) {
         var receiverId = null;
         var TIMEOUT_ON_KEYPRESS_CHAT = 300;
-        var SEND_MESSAGE = 'send message';
-        var NEW_MESSAGE = 'new message';
 
         /**
          * loads users by their name
@@ -58,7 +56,7 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
                     senderId: $rootScope.user._id,
                     receiverId: receiverId
                 };
-                socket.emit(SEND_MESSAGE, message);
+                socketService.sendMessage(message);
             }
             $scope.messageText = '';
         };
@@ -66,7 +64,7 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
         /**
          * When a new message arrives put it into messages array and force the digest cycle to run
          */
-        socket.on(NEW_MESSAGE, function (data) {
+        socketService.newMessage(function (data) {
             var receiver = data.msg.receiverId;
             var sender = data.msg.senderId;
             if (receiver === $rootScope.user._id || sender === $rootScope.user._id) {
