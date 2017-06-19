@@ -4,7 +4,7 @@ app.directive('friendRequests', ["friendRequestService", function (friendRequest
         scope: {
             data: '='
         },
-        templateUrl: './javascripts/directives/friend-requests.htm',
+        templateUrl: './javascripts/directives/friend-requests.directive.htm',
         link: function (scope) {
             scope.PENDING = 1;
             scope.ACCEPTED = 2;

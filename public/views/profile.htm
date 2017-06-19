@@ -28,9 +28,9 @@
                 <div class="panel-heading text-left btns-username">
                     <div class="btn-menu">
                         <!--TODO make constants instead of 1,2,3-->
-                        <a href="" ng-click="show = 1">Timeline</a>
-                        <a href="" ng-click="show = 2">Photos</a>
-                        <a href="" ng-click="show = 3">Friends</a>
+                        <a href="" ng-click="show = TIMELINE_PAGE">Timeline</a>
+                        <a href="" ng-click="show = PHOTOS_PAGE">Photos</a>
+                        <a href="" ng-click="show = FRIENDS_PAGE">Friends</a>
                     </div>
                     <div class="user-name">
                         <p>{{isCurrentUser ? user.fullName : profile.fullName}}</p>
@@ -40,8 +40,7 @@
         </div>
     </div>
     <!--======================================POSTS==============================================-->
-    <!--TODO remove 1 and put constant-->
-    <div class="row" ng-show="show == 1 || show == undefined">
+    <div class="row" ng-show="show == TIMELINE_PAGE || show == undefined">
         <div class="col-lg-8" ng-controller="postController">
             <!--============================= NEW POST ========================================-->
             <section class="addPost" ng-show="showAddPost">
@@ -82,8 +81,7 @@
     </div>
 
     <!--================================= PHOTOS =======================================-->
-    <!--TODO Remove 1 and put constant-->
-    <div class="row" ng-show="show == 2">
+    <div class="row" ng-show="show == PHOTOS_PAGE">
         <div class="col-lg-12">
             <!--======================== ADD PHOTO =====================================-->
             <div id="add-photo" class="panel panel-default photos-panel" ng-controller="photosController">
@@ -143,8 +141,7 @@
         </div>
     </div>
     <!--=================================FRIENDS==============================================-->
-    <!--TODO remove 3 and put constant-->
-    <div class="row" ng-show="show==3" ng-controller="friendsController">
+    <div class="row" ng-show="show == FRIENDS_PAGE" ng-controller="friendsController">
         <div class="col-lg-12">
             <div class="panel panel-default photos-panel">
                 <div class="panel-heading">
