@@ -5,11 +5,13 @@ app.factory('socketService', function () {
     var socket = io.connect();
     return {
         /**
-         * @param {any} callback - function to be executed when the event fires
+         * @param {Function} callback - function to be executed when the event fires
          */
         onNewMessage: function (callback) {
             socket.on('new message', function (message) {
-                callback(message);
+                if (typeof callback === 'function') {
+                    callback(message);
+                }
             });
         },
         /**
