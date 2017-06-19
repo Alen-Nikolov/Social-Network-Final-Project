@@ -40,39 +40,35 @@
     <div class="col-lg-4" ng-controller="chatUsersController">
         <div class="chat-fixed">
             <div class="input-search custom-search-form slide-toggle">
-                <input id="searchFriendsInputChat" type="text" class="form-control searchChat"
-                       ng-focus="showUsersForChat()" ng-keyup="filterUsersForChat(); showUsersForChat()"
+                <input id="searchFriendsInputChat" type="text"  class="form-control searchChat" ng-model="searchForChat"
+                       ng-focus="showUsersForChat();" ng-keyup="filterUsersForChat(); showUsersForChat()"
                        placeholder="Find a friend...">
-                <div class="searchFriendsChat">
-                    <div ng-repeat="chat in chatUsers">
+                <div class="searchFriendsChat" ng-if="showDivChatUsers">
+                    <div ng-repeat="chat in chatUsers" ng-click="closeDivUsers()">
                         <chat-users data='chat'></chat-users>
                     </div>
                 </div>
             </div>
             <div class="chat-panel panel panel-default">
-                <div class=" panel-heading chat-window" ng-click="hideShowChat()">
-
+                <div class=" panel-heading chat-window" data-slide-toggle=".slide-toggle">
                     <div>
-                        <i class="fa fa-comments fa-fw"></i> Chat <span class="friendName"> </span>
+                        <i class="fa fa-comments fa-fw"></i> Chat <span class="friendName" ng-show="friendName">with {{friendName}} </span>
                     </div>
                 </div>
                 <form id="chat-form" class="slide-toggle">
                     <div class="panel-body" id='chatDivScroll'>
                         <ul class="chat">
                             <div ng-repeat="msg in messages" class="listWithMessages">
-                                <li class='left clearfix'><strong
-                                        ng-class="{redText : msg.name == $root.user.fullName}"> {{msg.name}}</strong>:
-                                    {{msg.text}}
-                                </li>
+                                <message data="msg"></message>
                             </div>
                         </ul>
                     </div>
                     <div class="panel-footer">
                         <div class="input-group">
                             <input id="btn-input-chat" type="text" maxlength="200" class="form-control input-sm"
-                                   placeholder="Type your message here..."/>
+                                   placeholder="Type your message here..." ng-model="messageText"/>
                             <span class="input-group-btn">
-                            <button class="btn btn-chat">Send</button>
+                            <button class="btn btn-chat" ng-click="sendMessage()">Send</button>
                                 </span>
                         </div>
                     </div>
@@ -88,7 +84,6 @@
         crossorigin="anonymous"></script>
 <script src="javascripts/script.js"></script>
 <script src="javascripts/menu.js"></script>
-<script src="javascripts/chat.js"></script>
 
 <!-- modules -->
 <script src="javascripts/app.js"></script>
@@ -99,6 +94,12 @@
 <script src="javascripts/services/commentService.js"></script>
 <script src="javascripts/services/photoService.js"></script>
 <script src="javascripts/services/friend-request.service.js"></script>
+<script src="javascripts/services/delay.service.js"></script>
+<script src="javascripts/services/socket.service.js"></script>
+
+
+
+
 
 <!-- controllers -->
 <script src="javascripts/controllers/postController.js"></script>
@@ -107,16 +108,21 @@
 <script src="javascripts/controllers/photosController.js"></script>
 <script src="javascripts/controllers/friend-request.controller.js"></script>
 <script src="javascripts/controllers/friends.controller.js"></script>
-<script src="javascripts/controllers/chatUsersController.js"></script>
+<script src="javascripts/controllers/chat-users.controller.js"></script>
 <!-- directives -->
 <script src="javascripts/directives/posts.js"></script>
 <script src="javascripts/directives/comments.directive.js"></script>
 <script src="javascripts/directives/photos.js"></script>
 <script src="javascripts/directives/users.js"></script>
-<script src="javascripts/directives/friend-requests.js"></script>
+<script src="javascripts/directives/friend-requests.directive.js"></script>
 <script src="javascripts/directives/friends.js"></script>
-<script src="javascripts/directives/chatUsers.js"></script>
+<script src="javascripts/directives/chat-users.directive.js"></script>
+<script src="javascripts/directives/message.directive.js"></script>
 <script src="javascripts/directives/nav.js"></script>
+
+
+
+
 
 </body>
 

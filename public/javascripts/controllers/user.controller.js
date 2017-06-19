@@ -1,24 +1,23 @@
-app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope', 'userService', function ($http, $scope, $routeParams, $rootScope, userService) {
+app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope', 'delayService', 'userService', function ($http, $scope, $routeParams, $rootScope, delayService, userService) {
     var userId = $routeParams.userId;
     var POSTS_TO_SHOW = 5;
     var TIMEOUT_ON_KEYPRESS = 300;
+    $scope.TIMELINE_PAGE = 1;
+    $scope.PHOTOS_PAGE = 2;
+    $scope.FRIENDS_PAGE = 3;
+
 
     function loadUsersByName() {
-        userService.getUsers($scope.searchFriendsInput).then(function (res) {
-            $scope.users = res.data;
-        });
+        if ($scope.searchFriendsInput !== "") {
+            userService.getUsers($scope.searchFriendsInput).then(function (res) {
+                $scope.users = res.data;
+            });
+        }
     }
 
-    var delay = (function () {
-        var timer = 0;
-        return function (callback, ms) {
-            clearTimeout(timer);
-            timer = setTimeout(callback, ms);
-        };
-    })();
-
-
-    // ================== LOAD ALL USER POSTS ===================
+    /**
+     * If the user has logged in, download his posts
+     */
     if (userId) {
         userService.downloadUserPosts(userId).then(function (res) {
             $scope.posts = res.data;
@@ -29,7 +28,9 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
         });
     }
 
-    // ============= GET CURRENT USER/SHOW FRIENDS PROFILES =======================
+    /**
+     * checks if the user is looking at his own profile or someone else's
+     */
     userService.getCurrentUser().then(function (res) {
         $rootScope.user = res.data[0];
         $scope.isCurrentUser = true;
@@ -57,25 +58,18 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
 
     // ============= SEARCH USER BY FULL NAME ================
     $scope.filterUsers = function () {
-        delay(loadUsersByName, TIMEOUT_ON_KEYPRESS);
+        delayService.delay(loadUsersByName, TIMEOUT_ON_KEYPRESS);
     };
 
     // ================= SHOW DROP DOWN WITH FOUND USERS BY FULL NAME  =========
     $scope.showUsers = function () {
-        if ($scope.searchFriendsInput !== "") {
-            $scope.searchFriendsDiv = true;
-        } else {
-            $scope.searchFriendsDiv = false;
-        }
+        $scope.searchFriendsDiv = $scope.searchFriendsInput ? true : false;
     };
 
     // ===================== SHOW USER TIMELINE FIRST =====================
-    $scope.show = 1;
+    $scope.show = $scope.TIMELINE_PAGE;
 
     // ======================= ADD UPLOAD PICTURE TO POST ==================
-    $scope.addImageBtnPost = function () {
-        angular.element('.create-post input[type=file]').trigger('click');
-    };
     $scope.closeDivUsers = function () {
         $scope.searchFriendsDiv = false;
     }
