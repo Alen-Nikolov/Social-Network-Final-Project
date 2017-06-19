@@ -17,6 +17,7 @@ app.controller('commentController', ['$scope', '$rootScope', 'commentService', '
             likes: [],
             date: new Date().toLocaleString()
         };
+
         /**
          * If the comment text is empty the function addComment does not fire3
          */
@@ -31,19 +32,12 @@ app.controller('commentController', ['$scope', '$rootScope', 'commentService', '
         }
     };
 
-    /**
-     * Download all comments of a post and put them in the scope
-     */
     commentService.downloadComments(postId).then(function (res) {
         $scope.comments = res.data;
     });
 
-    /**
-     * Get the user that is currently logged in
-     */
     userService.getCurrentUser().then(function (res) {
         $scope.user = res.data;
     });
-
 
 }]);
