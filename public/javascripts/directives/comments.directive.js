@@ -10,7 +10,11 @@ app.directive('comments', ["$rootScope", "commentService", function ($rootScope,
             var userId = $rootScope.user._id;
             var comId = scope.data._id;
 
+
             if (comments.length !== 0) {
+                /**
+                 * for every comment checks if the current user has liked it already and changes color of like button
+                 */
                 scope.isLikedComment = function () {
                     if (scope.data.likes.indexOf(userId) === -1) {
                         scope.isLiked = false;
@@ -20,6 +24,9 @@ app.directive('comments', ["$rootScope", "commentService", function ($rootScope,
                 };
                 scope.isLikedComment();
 
+                /**
+                 * If comment is already liked - unlike it, if comment is not liked yet - like it
+                 */
                 scope.changeLikeComment = function () {
                     commentService.changeLikeComment(comId).then(function (res) {
                         if (res.data[0].likes.indexOf(userId) === -1) {
