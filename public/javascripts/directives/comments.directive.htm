@@ -1,0 +1,19 @@
+<div class="input-flex">
+    <div>
+        <a href="#/profile/{{data.userId}}"><img ng-src="{{data.userProfImg}}" err-src="../../images/profile.jpg"
+                                                 class="img-comments" alt="userImg"> </a>
+    </div>
+    <div class="comment-text">
+        <p ng-model="commentText"><strong>{{data.fname + ' ' + data.lname}}</strong> {{data.text}}</p>
+        <div class="comment-likes">
+            <div class="pull-left">
+                <a href="" class="like-btn-comments" ng-class="{'change-color':isLiked}"
+                   ng-click="changeLikeComment($event)">Like</a>
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{data.likes.length}}
+            </div>
+            <div class="pull-right">
+                <span><em>Posted at {{data.date}}</em></span>
+            </div>
+        </div>
+    </div>
+</div>
