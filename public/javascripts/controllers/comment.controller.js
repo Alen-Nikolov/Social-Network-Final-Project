@@ -18,9 +18,7 @@ app.controller('commentController', ['$scope', '$rootScope', 'commentService', '
             date: new Date().toLocaleString()
         };
 
-        /**
-         * If the comment text is empty the function addComment does not fire3
-         */
+        //If the comment text is empty the function addComment does not fire
         if (comment.text !== "") {
             commentService.addComment(comment).then(function (res) {
                 if (res.status === 201) {
