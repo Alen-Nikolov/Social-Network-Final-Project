@@ -1,30 +1,30 @@
-app.directive('photos', ["$rootScope", "photoService", "commentService", function($rootScope, photoService, commentService) {
+app.directive('photos', ["$rootScope", "photoService", "commentService", function ($rootScope, photoService, commentService) {
     return {
         restrict: 'E',
         scope: {
             data: '=',
         },
         templateUrl: './javascripts/directives/photos.directive.htm',
-        link: function(scope, $element) {
+        link: function (scope, $element) {
             var photoId = scope.data._id;
             var userId = $rootScope.user._id;
 
             scope.IsVisible = false;
-            scope.showHideComments = function() {
+            scope.showHideComments = function () {
                 scope.IsVisible = !scope.IsVisible;
             };
 
-            scope.isLiked = function() {
+            scope.isLiked = function () {
                 if (scope.data.likes.indexOf(userId) === -1) {
-                    $($element.find('.like-btn')).removeClass('change-color');
+                    $element.find('.like-btn').removeClass('change-color');
                 } else {
-                    $($element.find('.like-btn')).addClass('change-color');
+                    $element.find('.like-btn').addClass('change-color');
                 }
             };
             scope.isLiked();
 
-            scope.changeLike = function($event) {
-                photoService.changeLike(photoId).then(function(res) {
+            scope.changeLike = function ($event) {
+                photoService.changeLike(photoId).then(function (res) {
                     if (res.data[0].likes.indexOf(userId) === -1) {
                         scope.data.likes.push(userId);
                         scope.isLiked();
@@ -34,13 +34,13 @@ app.directive('photos', ["$rootScope", "photoService", "commentService", functio
                     }
                 });
             };
-            scope.numOfComments = function() {
-                commentService.downloadComments(photoId).then(function(res) {
+            scope.numOfComments = function () {
+                commentService.downloadComments(photoId).then(function (res) {
                     scope.comments = res.data;
                 });
             };
             scope.numOfComments();
-            $('.input-flex textarea').css('overflow', 'hidden').autogrow();
+            $element.find('.input-flex textarea').css('overflow', 'hidden').autogrow();
         }
     };
 }]);
