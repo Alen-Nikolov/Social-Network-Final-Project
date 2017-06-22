@@ -2,7 +2,7 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', '$elemen
     function ($scope, $rootScope, $http, $element, delayService, userService, socketService) {
         var receiverId = null;
         var TIMEOUT_ON_KEYPRESS_CHAT = 300;
-        var chat = document.getElementById("chatDivScroll");
+        var chat = document.getElementById("chat-div-scroll");
 
 
         /**
