@@ -1,7 +1,9 @@
-app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delayService', 'userService', 'socketService',
-    function ($scope, $rootScope, $http, delayService, userService, socketService) {
+app.controller('chatUsersController', ['$scope', '$rootScope', '$http', '$element', 'delayService', 'userService', 'socketService',
+    function ($scope, $rootScope, $http, $element, delayService, userService, socketService) {
         var receiverId = null;
         var TIMEOUT_ON_KEYPRESS_CHAT = 300;
+        var chat = document.getElementById("chatDivScroll");
+
 
         /**
          * loads users by their name
@@ -74,6 +76,7 @@ app.controller('chatUsersController', ['$scope', '$rootScope', '$http', 'delaySe
                 if ($scope.messages.indexOf(data.msg) === -1) {
                     $scope.messages.push(data.msg);
                     $scope.$apply();
+                    chat.scrollTop = chat.scrollHeight;
                 }
             }
         });
