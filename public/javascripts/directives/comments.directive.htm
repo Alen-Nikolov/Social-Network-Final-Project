@@ -1,6 +1,6 @@
 <div class="input-flex">
     <div>
-        <a href="#/profile/{{data.userId}}"><img ng-src="{{data.userProfImg}}" err-src="../../images/profile.jpg"
+        <a href="#/profile/{{data.userId}}"><img ng-src="{{data.user_id === $root.user._id ? $root.user.PROFILE_IMG_URL : data.userProfImg}}" err-src="../../images/profile.jpg"
                                                  class="img-comments" alt="userImg"> </a>
     </div>
     <div class="comment-text">

@@ -72,7 +72,11 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
     $scope.closeDivUsers = function () {
         $scope.searchFriendsDiv = false;
     };
-        //TODO: Make the post pictures of the current user also change without a refresh
+    //TODO: Make the post pictures of the current user also change without a refresh
+
+    /**
+     * Function for uploading a profile photo in profile and updating everywhere the profile photo is used
+     */
     $scope.uploadProfilePhoto = function () {
         var uploadUrl = "/user/coverAvatar";
         var fd = new FormData();
@@ -90,6 +94,9 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
         }
     };
 
+    /**
+     * Function for uploading a cover photo in profile
+     */
     $scope.uploadCoverPhoto = function () {
         var uploadUrl = "/user/coverAvatar";
         var fd = new FormData();
