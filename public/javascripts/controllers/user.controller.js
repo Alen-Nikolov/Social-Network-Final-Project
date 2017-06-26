@@ -72,7 +72,7 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
     $scope.closeDivUsers = function () {
         $scope.searchFriendsDiv = false;
     };
-
+        //TODO: Make the post pictures of the current user also change without a refresh
     $scope.uploadProfilePhoto = function () {
         var uploadUrl = "/user/coverAvatar";
         var fd = new FormData();
