@@ -25,8 +25,4 @@ app.controller('photosController', ['$scope', 'photoService', 'userService', fun
     $scope.uploadPhoto = function () {
         $scope.showPhotoUploader = !$scope.showPhotoUploader;
     };
-
-    $scope.showPhotoGallery = function () {
-        $scope.$parent.show = 2;
-    }
 }]);

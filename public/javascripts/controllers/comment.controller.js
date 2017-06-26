@@ -32,7 +32,6 @@ app.controller('commentController', ['$scope', '$rootScope', 'commentService', '
 
     commentService.downloadComments(postId).then(function (res) {
         $scope.comments = res.data;
-        console.log($scope.comments);
     });
 
     userService.getCurrentUser().then(function (res) {
