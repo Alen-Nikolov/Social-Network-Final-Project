@@ -6,8 +6,11 @@ app.controller('postController', ['$scope', '$http', '$rootScope', 'postService'
         $scope.posts = res.data;
 
         $scope.posts.forEach((post) => {
-            return post.date = new Date(post.date).toLocaleDateString('en-GB');
+            if(!isNaN(post.date)){
+                return post.date = new Date(post.date).toLocaleDateString('en-GB');
+            }
         });
+        console.log('download posts runs');
         $scope.somePosts = $scope.posts.slice(0, 5);
         $scope.loadMore = function () {
             $scope.somePosts = $scope.posts.slice(0, $scope.somePosts.length + 5);
