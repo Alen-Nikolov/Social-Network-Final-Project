@@ -10,7 +10,7 @@
                                 <img ng-src="{{isCurrentUser ? user.COVER_PHOTO_URL : profile.COVER_PHOTO_URL}}"
                                      err-src="../images/cover-photo.jpg" alt="cover photo">
                             </a>
-                            <input id="addCoverImg" type="file" name="cover" onchange="this.form.submit();">
+                            <input id="addCoverImg" type="file" file-model="coverPicture" name="cover" custom-on-change="uploadCoverPhoto">
                             <label for="addCoverImg" class="addCoverImg" ng-show="showBtnCover && isCurrentUser">add Cover photo</label>
                         </div>
                         <div class="profile-photo" ng-mouseover="showBtnAvatar = true"
@@ -20,14 +20,13 @@
                                 <img ng-src="{{isCurrentUser ? user.PROFILE_IMG_URL : profile.PROFILE_IMG_URL}}"
                                      err-src="../images/profile.jpg" alt="profile photo">
                             </a>
-                            <input id="addProfImg" type="file" name="avatar" onchange="this.form.submit();">
+                            <input id="addProfImg" type="file" file-model="avatarPicture" name="avatar" custom-on-change="uploadProfilePhoto">
                             <label for="addProfImg" class="addProfImg" ng-show="showBtnAvatar && isCurrentUser">add Avatar</label>
                         </div>
                     </form>
                 </div>
                 <div class="panel-heading text-left btns-username">
                     <div class="btn-menu">
-                        <!--TODO make constants instead of 1,2,3-->
                         <a href="" ng-click="show = TIMELINE_PAGE">Timeline</a>
                         <a href="" ng-click="show = PHOTOS_PAGE">Photos</a>
                         <a href="" ng-click="show = FRIENDS_PAGE">Friends</a>

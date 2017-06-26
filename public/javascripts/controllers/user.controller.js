@@ -6,7 +6,6 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
     $scope.PHOTOS_PAGE = 2;
     $scope.FRIENDS_PAGE = 3;
 
-
     function loadUsersByName() {
         if ($scope.searchFriendsInput !== "") {
             userService.getUsers($scope.searchFriendsInput).then(function (res) {
@@ -72,5 +71,39 @@ app.controller('userController', ['$http', '$scope', '$routeParams', '$rootScope
     // ======================= ADD UPLOAD PICTURE TO POST ==================
     $scope.closeDivUsers = function () {
         $scope.searchFriendsDiv = false;
-    }
+    };
+
+    $scope.uploadProfilePhoto = function () {
+        var uploadUrl = "/user/coverAvatar";
+        var fd = new FormData();
+        //check if there is a photo
+        if ($scope.avatarPicture) {
+            fd.append('avatar', $scope.avatarPicture);
+
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).success(function (data) {
+                $scope.avatarPicture = null;
+                $rootScope.user.PROFILE_IMG_URL = data;
+            });
+        }
+    };
+
+    $scope.uploadCoverPhoto = function () {
+        var uploadUrl = "/user/coverAvatar";
+        var fd = new FormData();
+        //check if there is a photo
+        if ($scope.coverPicture) {
+            fd.append('cover', $scope.coverPicture);
+
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).success(function (data) {
+                $scope.coverPicture = null;
+                $rootScope.user.COVER_PHOTO_URL = data;
+            });
+        }
+    };
 }]);

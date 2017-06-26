@@ -29,5 +29,4 @@ app.controller('photosController', ['$scope', 'photoService', 'userService', fun
     $scope.showPhotoGallery = function () {
         $scope.$parent.show = 2;
     }
-
 }]);

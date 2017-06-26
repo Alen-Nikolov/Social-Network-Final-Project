@@ -26,7 +26,7 @@ router.get('/', function (req, res) {
     var db = req.db;
     var users = db.get('users');
 
-    users.find({ _id: req.session.user._id }, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "receiveFriendRequests", "sendFriendRequests", "friends"]).then(function (user) {
+    users.find({_id: req.session.user._id}, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "receiveFriendRequests", "sendFriendRequests", "friends"]).then(function (user) {
         res.json(user);
     });
 });
@@ -39,9 +39,9 @@ router.get('/allfriendsrequests', function (req, res) {
     var userReceiveFriendRequests;
     var usersRequests = [];
 
-    users.find({ _id: userID }).then(function (usersReceive) {
+    users.find({_id: userID}).then(function (usersReceive) {
         userReceiveFriendRequests = usersReceive[0].receiveFriendRequests;
-        users.find({ _id: { $in: usersReceive[0].receiveFriendRequests } }, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "friends"]).then(function (usersFriendRequests) {
+        users.find({_id: {$in: usersReceive[0].receiveFriendRequests}}, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "friends"]).then(function (usersFriendRequests) {
             res.json(usersFriendRequests);
         });
 
@@ -53,7 +53,7 @@ router.get('/posts/:userId', function (req, res) {
     var posts = db.get('posts');
     var userID = req.params.userId;
 
-    posts.find({ user_id: userID }, { sort: { date: -1 } }).then(function (posts) {
+    posts.find({user_id: userID}, {sort: {date: -1}}).then(function (posts) {
         res.json(posts);
     });
 });
@@ -67,10 +67,10 @@ router.get('/chat/:friendId', function (req, res) {
 
     messages.find({
         $or: [
-            { $and: [{ receiverId: userId }, { senderId: friendId }] },
-            { $and: [{ receiverId: friendId }, { senderId: userId }] }
+            {$and: [{receiverId: userId}, {senderId: friendId}]},
+            {$and: [{receiverId: friendId}, {senderId: userId}]}
         ]
-    }, { sort: { date: 1 } }).then(function (messages) {
+    }, {sort: {date: 1}}).then(function (messages) {
         res.json(messages);
     });
 
@@ -81,7 +81,7 @@ router.get('/:userId', function (req, res) {
     var users = db.get('users');
     var userId = req.params.userId;
 
-    users.find({ _id: userId }, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "receiveFriendRequests", "sendFriendRequests", "friends"]).then(function (user) {
+    users.find({_id: userId}, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "receiveFriendRequests", "sendFriendRequests", "friends"]).then(function (user) {
         res.json(user[0]);
     });
 });
@@ -92,7 +92,10 @@ router.get('/find/:userName', function (req, res) {
     var users = db.get('users');
     var userName = new RegExp(req.params.userName, "i");
 
-    users.find({ fullName: userName, _id: { $ne: req.session.user._id } }, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "friends"]).then(function (data) {
+    users.find({
+        fullName: userName,
+        _id: {$ne: req.session.user._id}
+    }, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "friends"]).then(function (data) {
         res.json(data);
     });
 
@@ -103,15 +106,14 @@ router.post('/friendRequest/:userId', function (req, res) {
     var db = req.db;
     var users = db.get('users');
     var userId = req.params.userId;
-    users.find({ _id: req.session.user._id, sendFriendRequests: { $in: [userId] } }).then(function (data) {
+    users.find({_id: req.session.user._id, sendFriendRequests: {$in: [userId]}}).then(function (data) {
         if (data.length === 0) {
-            users.update({ _id: req.session.user._id }, { $addToSet: { sendFriendRequests: userId } });
-            users.update({ _id: userId }, { $addToSet: { receiveFriendRequests: req.session.user._id } });
+            users.update({_id: req.session.user._id}, {$addToSet: {sendFriendRequests: userId}});
+            users.update({_id: userId}, {$addToSet: {receiveFriendRequests: req.session.user._id}});
         }
         res.end();
     });
 });
-
 
 
 //================== ADD NEW POST ===================
@@ -177,7 +179,6 @@ router.post('/coverAvatar', uploading.any(), function (req, res) {
     var posts = db.get('posts');
     var comments = db.get('comments');
     var date = new Date();
-
     var picture = {
         user_id: req.session.user._id,
         path: req.files[0].path,
@@ -190,17 +191,17 @@ router.post('/coverAvatar', uploading.any(), function (req, res) {
     };
 
     if (req.files[0].fieldname === "cover") {
-        users.update({ _id: req.session.user._id }, { $set: { COVER_PHOTO_URL: req.files[0].path } }).then(function (data) {
+        users.update({_id: req.session.user._id}, {$set: {COVER_PHOTO_URL: req.files[0].path}}).then(function (data) {
             photos.insert(picture);
-            res.redirect('/#/profile/' + req.session.user._id);
+            res.send(req.files[0].path);
         });
     } else if (req.files[0].fieldname === "avatar") {
         //===== update profile image in comments and posts ====================
-        posts.update({ user_id: req.session.user._id }, { $set: { userProfImg: req.files[0].path } }, { multi: true }).then(function () {
-            comments.update({ user_id: req.session.user._id }, { $set: { userProfImg: req.files[0].path } }, { multi: true }).then(function () {
-                users.update({ _id: req.session.user._id }, { $set: { PROFILE_IMG_URL: req.files[0].path } }).then(function (data) {
+        posts.update({user_id: req.session.user._id}, {$set: {userProfImg: req.files[0].path}}, {multi: true}).then(function () {
+            comments.update({user_id: req.session.user._id}, {$set: {userProfImg: req.files[0].path}}, {multi: true}).then(function () {
+                users.update({_id: req.session.user._id}, {$set: {PROFILE_IMG_URL: req.files[0].path}}).then(function (data) {
                     photos.insert(picture);
-                    res.redirect('/#/profile/' + req.session.user._id);
+                    res.send(req.files[0].path);
                 });
             });
         });
@@ -216,10 +217,10 @@ router.post('/confirm/:reqFriendId', function (req, res) {
     var userID = req.session.user._id;
     var reqFriendId = req.params.reqFriendId;
 
-    users.update({ _id: userID }, { $pull: { receiveFriendRequests: reqFriendId } });
-    users.update({ _id: userID }, { $addToSet: { friends: reqFriendId } });
-    users.update({ _id: reqFriendId }, { $pull: { sendFriendRequests: userID } });
-    users.update({ _id: reqFriendId }, { $addToSet: { friends: userID } });
+    users.update({_id: userID}, {$pull: {receiveFriendRequests: reqFriendId}});
+    users.update({_id: userID}, {$addToSet: {friends: reqFriendId}});
+    users.update({_id: reqFriendId}, {$pull: {sendFriendRequests: userID}});
+    users.update({_id: reqFriendId}, {$addToSet: {friends: userID}});
     res.status(201).json({});
 });
 
@@ -230,8 +231,8 @@ router.post('/reject/:reqFriendId', function (req, res) {
     var userID = req.session.user._id;
     var reqFriendId = req.params.reqFriendId;
 
-    users.update({ _id: userID }, { $pull: { receiveFriendRequests: reqFriendId } });
-    users.update({ _id: reqFriendId }, { $pull: { sendFriendRequests: userID } });
+    users.update({_id: userID}, {$pull: {receiveFriendRequests: reqFriendId}});
+    users.update({_id: reqFriendId}, {$pull: {sendFriendRequests: userID}});
     res.status(201).json({});
 });
 
@@ -242,10 +243,10 @@ router.get('/friends/:userId', function (req, res) {
     var userId = req.params.userId;
     var userFriends = [];
 
-    users.find({ _id: userId }).then(function (user) {
+    users.find({_id: userId}).then(function (user) {
         userFriends = user[0].friends;
 
-        users.find({ _id: { $in: userFriends } }, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "friends"]).then(function (friends) {
+        users.find({_id: {$in: userFriends}}, ["_id", "fname", "lname", "fullName", "PROFILE_IMG_URL", "COVER_PHOTO_URL", "friends"]).then(function (friends) {
             res.json(friends);
         });
     });
